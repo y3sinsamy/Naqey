@@ -1,98 +1,222 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React from 'react';
+import { View, StyleSheet, Text, SafeAreaView, Pressable, Dimensions } from 'react-native';
+import { useRouter } from 'expo-router';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+const { width, height } = Dimensions.get('window');
+
+export default function WelcomeScreen() {
+  const router = useRouter();
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <SafeAreaView style={styles.container}>
+      {/* Ambient Background Elements */}
+      <View style={[styles.blurOrb, styles.orbTopRight]} />
+      <View style={[styles.blurOrb, styles.orbBottomLeft]} />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <View style={styles.content}>
+        {/* Brand Identity / Mark */}
+        <View style={styles.logoContainer}>
+          <View style={styles.iconWrapper}>
+            <MaterialSymbol name="spa" size={36} color={Colors.light.onPrimaryContainer} fill={true} />
+          </View>
+          <Text style={styles.brandName}>نقي</Text>
+        </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+        {/* Hero Typography */}
+        <View style={styles.heroSection}>
+          <Text style={styles.headline}>رحلة التعافي تبدأ بخطوة</Text>
+          <Text style={styles.subtitle}>Private and secure recovery journey</Text>
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        {/* Trust Indicators */}
+        <View style={styles.trustIndicators}>
+          <View style={styles.trustItem}>
+            <MaterialSymbol name="shield_lock" size={14} color={Colors.light.primary} />
+            <Text style={styles.trustText}>خصوصية تامة</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.trustItem}>
+            <MaterialSymbol name="verified_user" size={14} color={Colors.light.primary} />
+            <Text style={styles.trustText}>آمن وموثوق</Text>
+          </View>
+        </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        {/* Call to Action Section */}
+        <View style={styles.actionSection}>
+          <Pressable 
+            style={({ pressed }) => [styles.primaryButton, pressed && styles.buttonPressed]}
+            onPress={() => router.push('/onboarding/wizard')}
+          >
+            <Text style={styles.primaryButtonText}>ابدأ الآن</Text>
+          </Pressable>
+          <Pressable 
+            style={({ pressed }) => [styles.secondaryButton, pressed && styles.secondaryButtonPressed]}
+            onPress={() => router.push('/login')}
+          >
+            <Text style={styles.secondaryButtonText}>لدي حساب بالفعل</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      {/* Footer Tagline */}
+      <Text style={styles.footerText}>DESIGNED FOR SERENITY & RESILIENCE</Text>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.light.background,
+    alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
+    overflow: 'hidden',
   },
-  safeArea: {
+  blurOrb: {
+    position: 'absolute',
+    borderRadius: 9999,
+    opacity: 0.4,
+  },
+  orbTopRight: {
+    backgroundColor: Colors.light.primaryContainer,
+    width: 400,
+    height: 400,
+    top: -80,
+    right: -80,
+    // Add simple blur workaround for RN using opacity/size if true blur isn't easily cross-platform
+  },
+  orbBottomLeft: {
+    backgroundColor: Colors.light.secondaryContainer,
+    width: 300,
+    height: 300,
+    bottom: -80,
+    left: -80,
+  },
+  content: {
     flex: 1,
+    width: '100%',
+    maxWidth: 500,
     paddingHorizontal: Spacing.four,
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+    justifyContent: 'center',
+    zIndex: 10,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    marginBottom: Spacing.three,
+  },
+  iconWrapper: {
+    width: 80,
+    height: 80,
+    backgroundColor: Colors.light.primaryContainer,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: Spacing.base,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 4,
+  },
+  brandName: {
+    fontFamily: Fonts.medium,
+    fontSize: 24,
+    color: Colors.light.primary,
+    letterSpacing: -0.5,
   },
   heroSection: {
     alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+    marginBottom: Spacing.three,
+    width: '100%',
   },
-  title: {
+  headline: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 28,
+    color: Colors.light.onSurface,
+    textAlign: 'center',
+    marginBottom: Spacing.base,
+  },
+  subtitle: {
+    fontFamily: Fonts.regular,
+    fontSize: 18,
+    color: Colors.light.outline,
     textAlign: 'center',
   },
-  code: {
-    textTransform: 'uppercase',
+  trustIndicators: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: Spacing.base,
+    marginBottom: Spacing.four,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  trustItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  trustText: {
+    fontFamily: Fonts.medium,
+    fontSize: 11,
+    color: Colors.light.outline,
+  },
+  divider: {
+    width: 1,
+    height: 16,
+    backgroundColor: Colors.light.outlineVariant,
+    marginHorizontal: Spacing.three,
+  },
+  actionSection: {
+    width: '100%',
+    paddingTop: Spacing.four,
+  },
+  primaryButton: {
+    width: '100%',
+    height: 56,
+    backgroundColor: Colors.light.primary,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  buttonPressed: {
+    transform: [{ scale: 0.98 }],
+    opacity: 0.9,
+  },
+  primaryButtonText: {
+    fontFamily: Fonts.medium,
+    fontSize: 22,
+    color: Colors.light.onPrimary,
+  },
+  secondaryButton: {
+    width: '100%',
+    height: 48,
+    marginTop: Spacing.three,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  secondaryButtonPressed: {
+    backgroundColor: Colors.light.backgroundElement,
+  },
+  secondaryButtonText: {
+    fontFamily: Fonts.medium,
+    fontSize: 14,
+    color: Colors.light.primary,
+  },
+  footerText: {
+    position: 'absolute',
+    bottom: 40,
+    fontFamily: Fonts.medium,
+    fontSize: 11,
+    color: Colors.light.outlineVariant,
+    letterSpacing: 2,
+    textAlign: 'center',
   },
 });
