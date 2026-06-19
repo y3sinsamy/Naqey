@@ -1,12 +1,14 @@
-import React from 'react';
-import { StyleSheet, View, Text, ScrollView, Switch } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Spacing } from '@/constants/theme';
+import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
 import { useThemeContext } from '@/hooks/use-theme';
 
 export default function ProfileScreen() {
+  const router = useRouter();
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
   const { colors, isDark, toggleTheme } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
@@ -23,6 +25,19 @@ export default function ProfileScreen() {
         </View>
         <Text style={styles.name}>أحمد محمد</Text>
         <Text style={styles.email}>ahmed@example.com</Text>
+      </View>
+
+      <View style={styles.settingsSection}>
+        <Text style={styles.sectionTitle}>نشاطي</Text>
+        <Card style={styles.settingsCard}>
+          <TouchableOpacity style={styles.actionRow} onPress={() => router.push('/profile/appointments')}>
+            <View style={styles.settingInfo}>
+              <MaterialIcons name="calendar-today" size={24} color={colors.primary} />
+              <Text style={styles.actionText}>مواعيدي</Text>
+            </View>
+            <MaterialIcons name="chevron-left" size={24} color={colors.outline} />
+          </TouchableOpacity>
+        </Card>
       </View>
 
       <View style={styles.settingsSection}>
@@ -142,19 +157,19 @@ const createStyles = (colors: any) => StyleSheet.create({
     overflow: 'hidden',
   },
   settingRow: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: Spacing.four,
   },
   actionRow: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: Spacing.four,
   },
   settingInfo: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     gap: Spacing.three,
   },
