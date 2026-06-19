@@ -1,13 +1,15 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, Switch } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Spacing } from '@/constants/theme';
 
-import { Colors, Spacing } from '@/constants/theme';
 import { Card } from '@/components/ui/Card';
+import { useThemeContext } from '@/hooks/use-theme';
 
 export default function ProfileScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
-  const [darkMode, setDarkMode] = React.useState(false);
+  const { colors, isDark, toggleTheme } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
 
   return (
     <ScrollView style={styles.container}>
@@ -17,7 +19,7 @@ export default function ProfileScreen() {
 
       <View style={styles.profileSection}>
         <View style={styles.avatar}>
-          <MaterialIcons name="person" size={48} color={Colors.light.primary} />
+          <MaterialIcons name="person" size={48} color={colors.primary} />
         </View>
         <Text style={styles.name}>أحمد محمد</Text>
         <Text style={styles.email}>ahmed@example.com</Text>
@@ -28,25 +30,25 @@ export default function ProfileScreen() {
         <Card style={styles.settingsCard}>
           <View style={styles.settingRow}>
             <View style={styles.settingInfo}>
-              <MaterialIcons name="notifications" size={24} color={Colors.light.primary} />
+              <MaterialIcons name="notifications" size={24} color={colors.primary} />
               <Text style={styles.settingText}>الإشعارات</Text>
             </View>
             <Switch
               value={notificationsEnabled}
               onValueChange={setNotificationsEnabled}
-              trackColor={{ false: Colors.light.outlineVariant, true: Colors.light.primary }}
+              trackColor={{ false: colors.outlineVariant, true: colors.primary }}
             />
           </View>
           <View style={styles.divider} />
           <View style={styles.settingRow}>
             <View style={styles.settingInfo}>
-              <MaterialIcons name="dark-mode" size={24} color={Colors.light.primary} />
+              <MaterialIcons name="dark-mode" size={24} color={colors.primary} />
               <Text style={styles.settingText}>الوضع الليلي</Text>
             </View>
             <Switch
-              value={darkMode}
-              onValueChange={setDarkMode}
-              trackColor={{ false: Colors.light.outlineVariant, true: Colors.light.primary }}
+              value={isDark}
+              onValueChange={toggleTheme}
+              trackColor={{ false: colors.outlineVariant, true: colors.primary }}
             />
           </View>
         </Card>
@@ -57,25 +59,25 @@ export default function ProfileScreen() {
         <Card style={styles.settingsCard}>
           <View style={styles.actionRow}>
             <View style={styles.settingInfo}>
-              <MaterialIcons name="help" size={24} color={Colors.light.textSecondary} />
+              <MaterialIcons name="help" size={24} color={colors.textSecondary} />
               <Text style={styles.actionText}>مركز المساعدة</Text>
             </View>
-            <MaterialIcons name="chevron-left" size={24} color={Colors.light.outline} />
+            <MaterialIcons name="chevron-left" size={24} color={colors.outline} />
           </View>
           <View style={styles.divider} />
           <View style={styles.actionRow}>
             <View style={styles.settingInfo}>
-              <MaterialIcons name="security" size={24} color={Colors.light.textSecondary} />
+              <MaterialIcons name="security" size={24} color={colors.textSecondary} />
               <Text style={styles.actionText}>الخصوصية والأمان</Text>
             </View>
-            <MaterialIcons name="chevron-left" size={24} color={Colors.light.outline} />
+            <MaterialIcons name="chevron-left" size={24} color={colors.outline} />
           </View>
         </Card>
       </View>
 
       <View style={styles.logoutSection}>
         <View style={styles.logoutButton}>
-          <MaterialIcons name="logout" size={24} color={Colors.light.error} />
+          <MaterialIcons name="logout" size={24} color={colors.error} />
           <Text style={styles.logoutText}>تسجيل الخروج</Text>
         </View>
       </View>
@@ -83,34 +85,34 @@ export default function ProfileScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   header: {
     padding: Spacing.four,
     paddingTop: Spacing.six,
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: Colors.light.surfaceVariant,
+    borderBottomColor: colors.surfaceVariant,
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'right',
   },
   profileSection: {
     alignItems: 'center',
     paddingVertical: Spacing.six,
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
   },
   avatar: {
     width: 96,
     height: 96,
     borderRadius: 48,
-    backgroundColor: Colors.light.surfaceVariant,
+    backgroundColor: colors.surfaceVariant,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.three,
@@ -118,12 +120,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: '700',
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: 4,
   },
   email: {
     fontSize: 16,
-    color: Colors.light.textSecondary,
+    color: colors.textSecondary,
   },
   settingsSection: {
     padding: Spacing.four,
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: Colors.light.textSecondary,
+    color: colors.textSecondary,
     marginBottom: Spacing.three,
     textAlign: 'right',
   },
@@ -159,15 +161,15 @@ const styles = StyleSheet.create({
   settingText: {
     fontSize: 16,
     fontWeight: '500',
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
   },
   actionText: {
     fontSize: 16,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
   },
   divider: {
     height: 1,
-    backgroundColor: Colors.light.surfaceVariant,
+    backgroundColor: colors.surfaceVariant,
     marginLeft: Spacing.six + Spacing.two,
   },
   logoutSection: {
@@ -180,12 +182,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: Spacing.two,
     padding: Spacing.four,
-    backgroundColor: Colors.light.errorContainer,
+    backgroundColor: colors.errorContainer,
     borderRadius: 12,
   },
   logoutText: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.light.onErrorContainer,
+    color: colors.onErrorContainer,
   },
 });

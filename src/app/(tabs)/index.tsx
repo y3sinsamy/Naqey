@@ -1,20 +1,25 @@
+import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const { width } = Dimensions.get('window');
+import { useThemeContext } from '@/hooks/use-theme';
 
 export default function DashboardScreen() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       {/* Top AppBar */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.iconButton}>
-          <MaterialSymbol name="menu" size={24} color={Colors.light.primary} />
+          <MaterialSymbol name="menu" size={24} color={colors.primary} />
         </TouchableOpacity>
         <Text style={styles.brandTitle}>نقي</Text>
         <TouchableOpacity style={styles.iconButton}>
-          <MaterialSymbol name="notifications" size={24} color={Colors.light.primary} />
+          <MaterialSymbol name="notifications" size={24} color={colors.primary} />
         </TouchableOpacity>
       </View>
 
@@ -44,7 +49,7 @@ export default function DashboardScreen() {
               <Text style={styles.trackerDescription}>لقد أكملت 13% من هدف الـ 90 يوماً. استمر في التقدم!</Text>
 
               <TouchableOpacity style={styles.moodButton}>
-                <MaterialSymbol name="mood" size={20} color={Colors.light.onPrimaryContainer} fill={true} />
+                <MaterialSymbol name="mood" size={20} color={colors.onPrimaryContainer} fill={true} />
                 <Text style={styles.moodButtonText}>تقييم الحالة المزاجية</Text>
               </TouchableOpacity>
             </View>
@@ -53,10 +58,10 @@ export default function DashboardScreen() {
 
         {/* Grid of Quick Actions */}
         <View style={styles.actionsGrid}>
-          <ActionCard icon="medical_services" label="ابحث عن طبيب" bg={Colors.light.secondaryFixed} iconColor={Colors.light.onSecondaryFixedVariant} />
-          <ActionCard icon="event_available" label="احجز جلسة" bg={Colors.light.tertiaryFixed} iconColor={Colors.light.onTertiaryFixedVariant} />
-          <ActionCard icon="forum" label="تحدث مع طفران" bg={Colors.light.primaryFixed} iconColor={Colors.light.onPrimaryFixedVariant} />
-          <ActionCard icon="menu_book" label="مقالات التعافي" bg="rgba(57, 184, 253, 0.2)" iconColor={Colors.light.secondary} />
+          <ActionCard icon="medical_services" label="ابحث عن طبيب" bg={colors.secondaryFixed} iconColor={colors.onSecondaryFixedVariant} />
+          <ActionCard icon="event_available" label="احجز جلسة" bg={colors.tertiaryFixed} iconColor={colors.onTertiaryFixedVariant} />
+          <ActionCard icon="forum" label="تحدث مع طفران" bg={colors.primaryFixed} iconColor={colors.onPrimaryFixedVariant} />
+          <ActionCard icon="menu_book" label="مقالات التعافي" bg="rgba(57, 184, 253, 0.2)" iconColor={colors.secondary} />
         </View>
 
         {/* Recovery Tips */}
@@ -71,21 +76,21 @@ export default function DashboardScreen() {
           <TipCard
             icon="lightbulb"
             badge="نصيحة اليوم"
-            color={Colors.light.tertiary}
+            color={colors.tertiary}
             bgColor="rgba(14, 189, 87, 0.1)"
             text="تجنب المحفزات البصرية في الصباح الباكر، استبدلها بتمارين التنفس العميق."
           />
           <TipCard
             icon="spa"
             badge="الصحة النفسية"
-            color={Colors.light.secondary}
+            color={colors.secondary}
             bgColor="rgba(0, 101, 145, 0.1)"
             text="التأمل لمدة 5 دقائق يومياً يقلل من الرغبة الشديدة بنسبة تصل إلى 40%."
           />
           <TipCard
             icon="warning"
             badge="تنبيه"
-            color={Colors.light.error}
+            color={colors.error}
             bgColor="rgba(186, 26, 26, 0.1)"
             text="عند الشعور بالضغط، اتصل بصديق أو معالج فوراً ولا تتردد."
           />
@@ -100,19 +105,19 @@ export default function DashboardScreen() {
             <View style={styles.avatarGroup}>
               {/* Mocking overlapping avatars using simple views for now */}
               <View style={[styles.avatarCircle, { zIndex: 3, right: 0 }]} />
-              <View style={[styles.avatarCircle, { zIndex: 2, right: 20, backgroundColor: Colors.light.secondary }]} />
-              <View style={[styles.avatarCircle, { zIndex: 1, right: 40, backgroundColor: Colors.light.tertiary }]} />
+              <View style={[styles.avatarCircle, { zIndex: 2, right: 20, backgroundColor: colors.secondary }]} />
+              <View style={[styles.avatarCircle, { zIndex: 1, right: 40, backgroundColor: colors.tertiary }]} />
               <View style={[styles.avatarPlus, { right: 60 }]}>
                 <Text style={styles.avatarPlusText}>+50</Text>
               </View>
             </View>
-            <MaterialSymbol name="groups" size={80} color={Colors.light.primary} style={styles.bgIconLeft} />
+            <MaterialSymbol name="groups" size={80} color={colors.primary} style={styles.bgIconLeft} />
           </View>
 
           <View style={[styles.communityCard, { backgroundColor: 'rgba(57, 184, 253, 0.1)', borderColor: 'rgba(57, 184, 253, 0.2)', borderWidth: 1 }]}>
             <View>
-              <Text style={[styles.communityTitle, { color: Colors.light.onSecondaryContainer }]}>تحدي الأسبوع</Text>
-              <Text style={[styles.communitySubtitle, { color: Colors.light.onSecondaryContainer }]}>أكمل 7 أيام بدون تواصل مع محفزات قديمة.</Text>
+              <Text style={[styles.communityTitle, { color: colors.onSecondaryContainer }]}>تحدي الأسبوع</Text>
+              <Text style={[styles.communitySubtitle, { color: colors.onSecondaryContainer }]}>أكمل 7 أيام بدون تواصل مع محفزات قديمة.</Text>
             </View>
             <View style={styles.progressBarBg}>
               <View style={[styles.progressBarFill, { width: '65%' }]} />
@@ -124,13 +129,15 @@ export default function DashboardScreen() {
 
       {/* FAB: AI Assistant */}
       <TouchableOpacity style={styles.fab}>
-        <MaterialSymbol name="smart_toy" size={28} color={Colors.light.onPrimary} />
+        <MaterialSymbol name="smart_toy" size={28} color={colors.onPrimary} />
       </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
 function ActionCard({ icon, label, bg, iconColor }: { icon: string, label: string, bg: string, iconColor: string }) {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <TouchableOpacity style={styles.actionCard} activeOpacity={0.7}>
       <View style={[styles.actionIconWrapper, { backgroundColor: bg }]}>
@@ -142,6 +149,8 @@ function ActionCard({ icon, label, bg, iconColor }: { icon: string, label: strin
 }
 
 function TipCard({ icon, badge, color, bgColor, text }: { icon: string, badge: string, color: string, bgColor: string, text: string }) {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
     <View style={styles.tipCard}>
       <View style={styles.tipHeader}>
@@ -155,10 +164,10 @@ function TipCard({ icon, badge, color, bgColor, text }: { icon: string, badge: s
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
   },
   header: {
     flexDirection: 'row',
@@ -166,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: Spacing.four,
     height: 64,
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.05)',
   },
@@ -180,7 +189,7 @@ const styles = StyleSheet.create({
   brandTitle: {
     fontFamily: Fonts.bold,
     fontSize: 22,
-    color: Colors.light.primary,
+    color: colors.primary,
   },
   container: {
     flex: 1,
@@ -196,18 +205,18 @@ const styles = StyleSheet.create({
   greetingTitle: {
     fontFamily: Fonts.semiBold,
     fontSize: 24,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: 4,
     textAlign: 'left',
   },
   greetingSubtitle: {
     fontFamily: Fonts.regular,
     fontSize: 16,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     textAlign: 'left',
   },
   trackerCard: {
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     borderRadius: 24,
     padding: Spacing.four,
     marginBottom: Spacing.five,
@@ -235,30 +244,30 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: Colors.light.surfaceContainerLow, // Fallback for pure CSS conic gradient
+    backgroundColor: colors.surfaceContainerLow, // Fallback for pure CSS conic gradient
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 6,
-    borderColor: Colors.light.primary, // Simplified progress representation
+    borderColor: colors.primary, // Simplified progress representation
   },
   circularProgressInner: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     alignItems: 'center',
     justifyContent: 'center',
   },
   progressValue: {
     fontFamily: Fonts.bold,
     fontSize: 36,
-    color: Colors.light.primary,
+    color: colors.primary,
     lineHeight: 42,
   },
   progressUnit: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.outline,
+    color: colors.outline,
   },
   trackerInfo: {
     flex: 1,
@@ -267,20 +276,20 @@ const styles = StyleSheet.create({
   trackerTitle: {
     fontFamily: Fonts.medium,
     fontSize: 18,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: 4,
     textAlign: 'right',
   },
   trackerDescription: {
     fontFamily: Fonts.regular,
     fontSize: 14,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     marginBottom: Spacing.three,
     textAlign: 'right',
     lineHeight: 20,
   },
   moodButton: {
-    backgroundColor: Colors.light.primaryContainer,
+    backgroundColor: colors.primaryContainer,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
     borderRadius: 20,
@@ -291,7 +300,7 @@ const styles = StyleSheet.create({
   moodButtonText: {
     fontFamily: Fonts.medium,
     fontSize: 12,
-    color: Colors.light.onPrimaryContainer,
+    color: colors.onPrimaryContainer,
   },
   actionsGrid: {
     flexDirection: 'row',
@@ -302,7 +311,7 @@ const styles = StyleSheet.create({
   },
   actionCard: {
     width: '47%',
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.three,
     borderRadius: 20,
     alignItems: 'center',
@@ -325,7 +334,7 @@ const styles = StyleSheet.create({
   actionLabel: {
     fontFamily: Fonts.medium,
     fontSize: 13,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'center',
   },
   sectionHeader: {
@@ -337,12 +346,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: Fonts.semiBold,
     fontSize: 18,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
   },
   seeAllText: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.primary,
+    color: colors.primary,
   },
   tipsScrollView: {
     marginHorizontal: -Spacing.four,
@@ -354,7 +363,7 @@ const styles = StyleSheet.create({
   },
   tipCard: {
     width: 260,
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.four,
     borderRadius: 24,
     borderWidth: 1,
@@ -378,7 +387,7 @@ const styles = StyleSheet.create({
   tipText: {
     fontFamily: Fonts.regular,
     fontSize: 14,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     lineHeight: 22,
     textAlign: 'left',
   },
@@ -398,7 +407,7 @@ const styles = StyleSheet.create({
   communityTitle: {
     fontFamily: Fonts.semiBold,
     fontSize: 16,
-    color: Colors.light.onPrimaryContainer,
+    color: colors.onPrimaryContainer,
     marginBottom: 4,
     textAlign: 'left',
   },
@@ -418,24 +427,24 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     position: 'absolute',
     borderWidth: 2,
-    borderColor: Colors.light.surface,
+    borderColor: colors.surface,
   },
   avatarPlus: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     position: 'absolute',
     borderWidth: 2,
-    borderColor: Colors.light.surface,
+    borderColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarPlusText: {
-    color: Colors.light.onPrimary,
+    color: colors.onPrimary,
     fontSize: 10,
     fontFamily: Fonts.medium,
   },
@@ -454,7 +463,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: Colors.light.secondary,
+    backgroundColor: colors.secondary,
   },
   fab: {
     position: 'absolute',
@@ -463,7 +472,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',

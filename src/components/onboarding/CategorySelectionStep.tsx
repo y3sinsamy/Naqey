@@ -1,9 +1,14 @@
+import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function CategorySelectionStep() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const [selectedGender, setSelectedGender] = useState<'male' | 'female' | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
@@ -38,11 +43,11 @@ export default function CategorySelectionStep() {
         <View style={styles.formRow}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>الاسم أو اللقب</Text>
-            <TextInput style={styles.input} placeholder="مثال: نقـي" placeholderTextColor={Colors.light.outlineVariant} />
+            <TextInput style={styles.input} placeholder="مثال: نقـي" placeholderTextColor={colors.outlineVariant} />
           </View>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>العمر</Text>
-            <TextInput style={styles.input} placeholder="مثال: 25" keyboardType="numeric" placeholderTextColor={Colors.light.outlineVariant} />
+            <TextInput style={styles.input} placeholder="مثال: 25" keyboardType="numeric" placeholderTextColor={colors.outlineVariant} />
           </View>
         </View>
         <View style={styles.inputGroup}>
@@ -76,13 +81,13 @@ export default function CategorySelectionStep() {
               activeOpacity={0.8}
             >
               <View style={styles.categoryIconWrapper}>
-                <MaterialSymbol name={category.icon} size={28} color={Colors.light.primary} />
+                <MaterialSymbol name={category.icon} size={28} color={colors.primary} />
               </View>
               <Text style={styles.categoryTitle}>{category.title}</Text>
 
               {isSelected && (
                 <View style={styles.checkIcon}>
-                  <MaterialSymbol name="check_circle" size={20} color={Colors.light.primary} fill={true} />
+                  <MaterialSymbol name="check_circle" size={20} color={colors.primary} fill={true} />
                 </View>
               )}
             </TouchableOpacity>
@@ -93,7 +98,7 @@ export default function CategorySelectionStep() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -108,19 +113,19 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: Fonts.semiBold,
     fontSize: 28,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: Spacing.base,
     textAlign: 'left',
   },
   subtitle: {
     fontFamily: Fonts.regular,
     fontSize: 16,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     textAlign: 'left',
     lineHeight: 24,
   },
   sectionContainer: {
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.three,
     borderRadius: 24,
     borderWidth: 1,
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontFamily: Fonts.medium,
     fontSize: 18,
-    color: Colors.light.primary,
+    color: colors.primary,
     marginBottom: Spacing.three,
     textAlign: 'left',
   },
@@ -146,18 +151,18 @@ const styles = StyleSheet.create({
   label: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     marginBottom: Spacing.base,
     textAlign: 'left',
   },
   input: {
     height: 56,
-    backgroundColor: Colors.light.backgroundElement,
+    backgroundColor: colors.backgroundElement,
     borderRadius: 20,
     paddingHorizontal: Spacing.three,
     fontFamily: Fonts.regular,
     fontSize: 16,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
   },
   genderRow: {
     flexDirection: 'row',
@@ -166,7 +171,7 @@ const styles = StyleSheet.create({
   genderButton: {
     flex: 1,
     height: 56,
-    backgroundColor: Colors.light.backgroundElement,
+    backgroundColor: colors.backgroundElement,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -175,15 +180,15 @@ const styles = StyleSheet.create({
   },
   genderButtonActive: {
     backgroundColor: 'rgba(20, 184, 166, 0.05)', // primary with 5% opacity
-    borderColor: Colors.light.primary,
+    borderColor: colors.primary,
   },
   genderText: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
   },
   genderTextActive: {
-    color: Colors.light.primary,
+    color: colors.primary,
   },
   categoriesGrid: {
     flexDirection: 'row',
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
   categoryCard: {
     width: '47%',
     height: 160,
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     borderRadius: 24,
     borderWidth: 1,
     borderColor: 'rgba(187, 202, 198, 0.3)',
@@ -203,7 +208,7 @@ const styles = StyleSheet.create({
     padding: Spacing.three,
   },
   categoryCardActive: {
-    borderColor: Colors.light.primary,
+    borderColor: colors.primary,
     backgroundColor: 'rgba(20, 184, 166, 0.05)',
   },
   categoryIconWrapper: {
@@ -218,7 +223,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'center',
   },
   checkIcon: {

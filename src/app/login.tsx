@@ -3,9 +3,13 @@ import { View, StyleSheet, Text, TextInput, SafeAreaView, KeyboardAvoidingView, 
 import { useRouter } from 'expo-router';
 
 import { Colors, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { Button } from '@/components/ui/Button';
 
 export default function LoginScreen() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const router = useRouter();
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,7 +41,7 @@ export default function LoginScreen() {
               <TextInput
                 style={styles.input}
                 placeholder="05X XXX XXXX"
-                placeholderTextColor={Colors.light.outline}
+                placeholderTextColor={colors.outline}
                 keyboardType="phone-pad"
                 value={phone}
                 onChangeText={setPhone}
@@ -69,10 +73,10 @@ export default function LoginScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   keyboardView: {
     flex: 1,
@@ -92,12 +96,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: Spacing.one,
   },
   subtitle: {
     fontSize: 16,
-    color: Colors.light.textSecondary,
+    color: colors.textSecondary,
   },
   form: {
     width: '100%',
@@ -108,19 +112,19 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '500',
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: Spacing.two,
     textAlign: 'right',
   },
   input: {
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
     borderWidth: 1,
-    borderColor: Colors.light.outlineVariant,
+    borderColor: colors.outlineVariant,
     borderRadius: 12,
     paddingHorizontal: Spacing.three,
     paddingVertical: 14,
     fontSize: 16,
-    color: Colors.light.text,
+    color: colors.text,
   },
   submitButton: {
     marginTop: Spacing.two,
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.five,
   },
   footerText: {
-    color: Colors.light.textSecondary,
+    color: colors.textSecondary,
     fontSize: 14,
   },
 });

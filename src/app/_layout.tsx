@@ -1,11 +1,12 @@
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider as ExpoThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import 'react-native-reanimated';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
+import { ThemeProvider, useThemeContext } from '@/hooks/use-theme';
 
 import {
   IBMPlexSansArabic_400Regular,
@@ -19,7 +20,6 @@ import { MaterialSymbolsOutlined_400Regular } from '@expo-google-fonts/material-
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     IBMPlexSansArabic_400Regular,
     IBMPlexSansArabic_500Medium,
@@ -39,7 +39,16 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+
+function AppContent() {
+  const { theme } = useThemeContext();
+  return (
+    <ExpoThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
         <Stack.Screen name="login" />
@@ -47,6 +56,6 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
       </Stack>
       <AnimatedSplashOverlay />
-    </ThemeProvider>
+    </ExpoThemeProvider>
   );
 }

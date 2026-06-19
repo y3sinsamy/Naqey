@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ViewProps, ViewStyle, StyleProp } from 'react-native';
 import { Colors, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 
 interface CardProps extends ViewProps {
   style?: StyleProp<ViewStyle>;
@@ -8,6 +9,8 @@ interface CardProps extends ViewProps {
 }
 
 export const Card = ({ children, style, variant = 'elevated', ...props }: CardProps) => {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
   const getVariantStyles = () => {
     switch (variant) {
       case 'elevated':
@@ -26,14 +29,14 @@ export const Card = ({ children, style, variant = 'elevated', ...props }: CardPr
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   card: {
     borderRadius: 16,
     padding: Spacing.four,
-    backgroundColor: Colors.light.surface,
+    backgroundColor: colors.surface,
   },
   elevated: {
-    shadowColor: Colors.light.text,
+    shadowColor: colors.text,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -41,9 +44,9 @@ const styles = StyleSheet.create({
   },
   outlined: {
     borderWidth: 1,
-    borderColor: Colors.light.outlineVariant,
+    borderColor: colors.outlineVariant,
   },
   filled: {
-    backgroundColor: Colors.light.backgroundElement,
+    backgroundColor: colors.backgroundElement,
   },
 });

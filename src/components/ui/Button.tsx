@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, PressableProps, ViewStyle, TextStyle, ActivityIndicator, StyleProp } from 'react-native';
 import { Colors, Spacing } from '@/constants/theme';
-
+import { useThemeContext } from '@/hooks/use-theme';
 interface ButtonProps extends PressableProps {
   title: string;
   variant?: 'primary' | 'secondary' | 'outline' | 'text';
@@ -21,29 +21,32 @@ export const Button = ({
   disabled,
   ...props
 }: ButtonProps) => {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const getBackgroundColor = (pressed: boolean) => {
-    if (disabled) return Colors.light.backgroundElement;
+    if (disabled) return colors.backgroundElement;
     switch (variant) {
-      case 'primary': return pressed ? Colors.light.onPrimaryContainer : Colors.light.primary;
-      case 'secondary': return pressed ? Colors.light.backgroundSelected : Colors.light.backgroundElement;
-      case 'outline': return pressed ? Colors.light.backgroundElement : 'transparent';
-      case 'text': return pressed ? Colors.light.backgroundElement : 'transparent';
+      case 'primary': return pressed ? colors.onPrimaryContainer : colors.primary;
+      case 'secondary': return pressed ? colors.backgroundSelected : colors.backgroundElement;
+      case 'outline': return pressed ? colors.backgroundElement : 'transparent';
+      case 'text': return pressed ? colors.backgroundElement : 'transparent';
     }
   };
 
   const getTextColor = () => {
-    if (disabled) return Colors.light.textSecondary;
+    if (disabled) return colors.textSecondary;
     switch (variant) {
-      case 'primary': return Colors.light.onPrimary;
-      case 'secondary': return Colors.light.primary;
-      case 'outline': return Colors.light.primary;
-      case 'text': return Colors.light.primary;
+      case 'primary': return colors.onPrimary;
+      case 'secondary': return colors.primary;
+      case 'outline': return colors.primary;
+      case 'text': return colors.primary;
     }
   };
 
   const getBorder = () => {
     if (variant === 'outline') {
-      return { borderWidth: 1, borderColor: disabled ? Colors.light.outlineVariant : Colors.light.outline };
+      return { borderWidth: 1, borderColor: disabled ? colors.outlineVariant : colors.outline };
     }
     return {};
   };
@@ -79,7 +82,7 @@ export const Button = ({
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   button: {
     borderRadius: 12,
     alignItems: 'center',

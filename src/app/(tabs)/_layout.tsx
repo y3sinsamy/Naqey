@@ -3,9 +3,10 @@ import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { Tabs } from 'expo-router';
 import { StyleSheet, Text, useColorScheme, View } from 'react-native';
 
+import { useThemeContext } from '@/hooks/use-theme';
+
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const theme = colorScheme === 'dark' ? 'dark' : 'light';
+  const { theme, colors } = useThemeContext();
 
   return (
     <Tabs
@@ -13,7 +14,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: Colors[theme].surface,
+          backgroundColor: colors.surface,
           borderTopWidth: 0,
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
@@ -34,7 +35,7 @@ export default function TabLayout() {
         options={{
           title: 'الرئيسية',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="home" title="الرئيسية" theme={theme} />
+            <TabIcon focused={focused} name="home" title="الرئيسية" colors={colors} />
           ),
         }}
       />
@@ -43,7 +44,7 @@ export default function TabLayout() {
         options={{
           title: 'الأطباء',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="medical_services" title="الأطباء" theme={theme} />
+            <TabIcon focused={focused} name="medical_services" title="الأطباء" colors={colors} />
           ),
         }}
       />
@@ -52,7 +53,7 @@ export default function TabLayout() {
         options={{
           title: 'التعافي',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="rebase_edit" title="التعافي" theme={theme} />
+            <TabIcon focused={focused} name="rebase_edit" title="التعافي" colors={colors} />
           ),
         }}
       />
@@ -61,7 +62,7 @@ export default function TabLayout() {
         options={{
           title: 'المقالات',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="menu_book" title="المقالات" theme={theme} />
+            <TabIcon focused={focused} name="menu_book" title="المقالات" colors={colors} />
           ),
         }}
       />
@@ -70,7 +71,7 @@ export default function TabLayout() {
         options={{
           title: 'الملف الشخصي',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="person" title="الملف الشخصي" theme={theme} />
+            <TabIcon focused={focused} name="person" title="الملف الشخصي" colors={colors} />
           ),
         }}
       />
@@ -78,20 +79,20 @@ export default function TabLayout() {
   );
 }
 
-function TabIcon({ focused, name, title, theme }: { focused: boolean; name: string; title: string; theme: 'light' | 'dark' }) {
+function TabIcon({ focused, name, title, colors }: { focused: boolean; name: string; title: string; colors: typeof Colors.light }) {
   if (focused) {
     return (
-      <View style={[styles.activeTabContainer, { backgroundColor: Colors[theme].primaryContainer }]}>
-        <MaterialSymbol name={name} size={24} color={Colors[theme].onPrimaryContainer} fill={true} />
-        <Text style={[styles.activeTabText, { color: Colors[theme].onPrimaryContainer }]}>{title}</Text>
+      <View style={[styles.activeTabContainer, { backgroundColor: colors.primaryContainer }]}>
+        <MaterialSymbol name={name} size={24} color={colors.onPrimaryContainer} fill={true} />
+        <Text numberOfLines={1} style={[styles.activeTabText, { color: colors.onPrimaryContainer }]}>{title}</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.inactiveTabContainer}>
-      <MaterialSymbol name={name} size={24} color={Colors[theme].onSurfaceVariant} fill={false} />
-      <Text style={[styles.inactiveTabText, { color: Colors[theme].onSurfaceVariant }]}>{title}</Text>
+      <MaterialSymbol name={name} size={24} color={colors.onSurfaceVariant} fill={false} />
+      <Text numberOfLines={1} style={[styles.inactiveTabText, { color: colors.onSurfaceVariant }]}>{title}</Text>
     </View>
   );
 }

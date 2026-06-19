@@ -1,15 +1,20 @@
+import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
 export default function PrivacyAssuranceStep() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const points = [
-    { icon: 'person_pin', title: 'يسمح بالاسم المستعار', colorBg: Colors.light.secondaryFixed, colorIcon: Colors.light.onSecondaryFixedVariant },
-    { icon: 'encrypted', title: 'مدفوعات آمنة', colorBg: Colors.light.tertiaryFixed, colorIcon: Colors.light.onTertiaryFixedVariant },
-    { icon: 'visibility_off', title: 'خصوصية الجلسات', colorBg: Colors.light.primaryFixed, colorIcon: Colors.light.onPrimaryFixedVariant },
-    { icon: 'sticky_note_2', title: 'ملاحظات شخصية', colorBg: 'rgba(57, 184, 253, 0.2)', colorIcon: Colors.light.secondary }, // secondaryContainer with opacity
+    { icon: 'person_pin', title: 'يسمح بالاسم المستعار', colorBg: colors.secondaryFixed, colorIcon: colors.onSecondaryFixedVariant },
+    { icon: 'encrypted', title: 'مدفوعات آمنة', colorBg: colors.tertiaryFixed, colorIcon: colors.onTertiaryFixedVariant },
+    { icon: 'visibility_off', title: 'خصوصية الجلسات', colorBg: colors.primaryFixed, colorIcon: colors.onPrimaryFixedVariant },
+    { icon: 'sticky_note_2', title: 'ملاحظات شخصية', colorBg: 'rgba(57, 184, 253, 0.2)', colorIcon: colors.secondary }, // secondaryContainer with opacity
   ];
 
   return (
@@ -17,7 +22,7 @@ export default function PrivacyAssuranceStep() {
       {/* Hero Icon */}
       <View style={styles.heroSection}>
         <View style={styles.iconWrapper}>
-          <MaterialSymbol name="shield_lock" size={48} color={Colors.light.primary} fill={true} />
+          <MaterialSymbol name="shield_lock" size={48} color={colors.primary} fill={true} />
         </View>
       </View>
 
@@ -44,7 +49,7 @@ export default function PrivacyAssuranceStep() {
       {/* Trust Indicator */}
       <View style={styles.trustIndicator}>
         <View style={styles.trustIconWrapper}>
-          <MaterialSymbol name="verified_user" size={24} color={Colors.light.primary} />
+          <MaterialSymbol name="verified_user" size={24} color={colors.primary} />
         </View>
         <View style={styles.trustTextContainer}>
           <Text style={styles.trustLabel}>معايير أمنية</Text>
@@ -55,7 +60,7 @@ export default function PrivacyAssuranceStep() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -89,13 +94,13 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: Fonts.semiBold,
     fontSize: 28,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: Spacing.base,
   },
   subtitle: {
     fontFamily: Fonts.regular,
     fontSize: 16,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     textAlign: 'center',
     lineHeight: 24,
     maxWidth: 280,
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
   },
   privacyCard: {
     width: (width - Spacing.four * 2 - Spacing.two) / 2, // 2 columns
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.three,
     borderRadius: 20,
     alignItems: 'center',
@@ -133,13 +138,13 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'center',
   },
   trustIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.light.surfaceContainer,
+    backgroundColor: colors.surfaceContainer,
     padding: Spacing.three,
     borderRadius: 16,
     width: '100%',
@@ -148,7 +153,7 @@ const styles = StyleSheet.create({
   trustIconWrapper: {
     width: 40,
     height: 40,
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -160,7 +165,7 @@ const styles = StyleSheet.create({
   trustLabel: {
     fontFamily: Fonts.medium,
     fontSize: 12,
-    color: Colors.light.outline,
+    color: colors.outline,
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 2,
@@ -169,7 +174,7 @@ const styles = StyleSheet.create({
   trustDescription: {
     fontFamily: Fonts.regular,
     fontSize: 14,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'left',
   },
 });

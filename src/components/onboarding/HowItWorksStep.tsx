@@ -1,8 +1,13 @@
+import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function HowItWorksStep() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const steps = [
     {
       icon: 'person_search',
@@ -46,7 +51,7 @@ export default function HowItWorksStep() {
         {steps.map((step, index) => (
           <View key={index} style={styles.stepCard}>
             <View style={styles.iconContainer}>
-              <MaterialSymbol name={step.icon} size={32} color={Colors.light.primary} />
+              <MaterialSymbol name={step.icon} size={32} color={colors.primary} />
             </View>
             <View style={styles.stepTextContainer}>
               <Text style={styles.stepTitle}>{step.title}</Text>
@@ -59,7 +64,7 @@ export default function HowItWorksStep() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -90,13 +95,13 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: Fonts.semiBold,
     fontSize: 28,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     marginBottom: Spacing.base,
   },
   subtitle: {
     fontFamily: Fonts.regular,
     fontSize: 16,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     textAlign: 'center',
     lineHeight: 24,
   },
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
   stepCard: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.four,
     borderRadius: 20,
     borderWidth: 1,
@@ -134,14 +139,14 @@ const styles = StyleSheet.create({
   stepTitle: {
     fontFamily: Fonts.medium,
     fontSize: 18,
-    color: Colors.light.primary,
+    color: colors.primary,
     marginBottom: 4,
     textAlign: 'left', // Keep default, let RTL handle it
   },
   stepDescription: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.onSurfaceVariant,
+    color: colors.onSurfaceVariant,
     lineHeight: 20,
     textAlign: 'left',
   },

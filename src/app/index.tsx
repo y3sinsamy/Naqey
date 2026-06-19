@@ -3,11 +3,15 @@ import { View, StyleSheet, Text, SafeAreaView, Pressable, Dimensions } from 'rea
 import { useRouter } from 'expo-router';
 
 import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 
 const { width, height } = Dimensions.get('window');
 
 export default function WelcomeScreen() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const router = useRouter();
 
   return (
@@ -20,7 +24,7 @@ export default function WelcomeScreen() {
         {/* Brand Identity / Mark */}
         <View style={styles.logoContainer}>
           <View style={styles.iconWrapper}>
-            <MaterialSymbol name="spa" size={36} color={Colors.light.onPrimaryContainer} fill={true} />
+            <MaterialSymbol name="spa" size={36} color={colors.onPrimaryContainer} fill={true} />
           </View>
           <Text style={styles.brandName}>نقي</Text>
         </View>
@@ -34,12 +38,12 @@ export default function WelcomeScreen() {
         {/* Trust Indicators */}
         <View style={styles.trustIndicators}>
           <View style={styles.trustItem}>
-            <MaterialSymbol name="shield_lock" size={14} color={Colors.light.primary} />
+            <MaterialSymbol name="shield_lock" size={14} color={colors.primary} />
             <Text style={styles.trustText}>خصوصية تامة</Text>
           </View>
           <View style={styles.divider} />
           <View style={styles.trustItem}>
-            <MaterialSymbol name="verified_user" size={14} color={Colors.light.primary} />
+            <MaterialSymbol name="verified_user" size={14} color={colors.primary} />
             <Text style={styles.trustText}>آمن وموثوق</Text>
           </View>
         </View>
@@ -67,10 +71,10 @@ export default function WelcomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
     opacity: 0.4,
   },
   orbTopRight: {
-    backgroundColor: Colors.light.primaryContainer,
+    backgroundColor: colors.primaryContainer,
     width: 400,
     height: 400,
     top: -80,
@@ -89,7 +93,7 @@ const styles = StyleSheet.create({
     // Add simple blur workaround for RN using opacity/size if true blur isn't easily cross-platform
   },
   orbBottomLeft: {
-    backgroundColor: Colors.light.secondaryContainer,
+    backgroundColor: colors.secondaryContainer,
     width: 300,
     height: 300,
     bottom: -80,
@@ -111,7 +115,7 @@ const styles = StyleSheet.create({
   iconWrapper: {
     width: 80,
     height: 80,
-    backgroundColor: Colors.light.primaryContainer,
+    backgroundColor: colors.primaryContainer,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -125,7 +129,7 @@ const styles = StyleSheet.create({
   brandName: {
     fontFamily: Fonts.medium,
     fontSize: 24,
-    color: Colors.light.primary,
+    color: colors.primary,
     letterSpacing: -0.5,
   },
   heroSection: {
@@ -136,14 +140,14 @@ const styles = StyleSheet.create({
   headline: {
     fontFamily: Fonts.semiBold,
     fontSize: 28,
-    color: Colors.light.onSurface,
+    color: colors.onSurface,
     textAlign: 'center',
     marginBottom: Spacing.base,
   },
   subtitle: {
     fontFamily: Fonts.regular,
     fontSize: 18,
-    color: Colors.light.outline,
+    color: colors.outline,
     textAlign: 'center',
   },
   trustIndicators: {
@@ -160,12 +164,12 @@ const styles = StyleSheet.create({
   trustText: {
     fontFamily: Fonts.medium,
     fontSize: 11,
-    color: Colors.light.outline,
+    color: colors.outline,
   },
   divider: {
     width: 1,
     height: 16,
-    backgroundColor: Colors.light.outlineVariant,
+    backgroundColor: colors.outlineVariant,
     marginHorizontal: Spacing.three,
   },
   actionSection: {
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
   primaryButton: {
     width: '100%',
     height: 56,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -192,7 +196,7 @@ const styles = StyleSheet.create({
   primaryButtonText: {
     fontFamily: Fonts.medium,
     fontSize: 22,
-    color: Colors.light.onPrimary,
+    color: colors.onPrimary,
   },
   secondaryButton: {
     width: '100%',
@@ -203,19 +207,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   secondaryButtonPressed: {
-    backgroundColor: Colors.light.backgroundElement,
+    backgroundColor: colors.backgroundElement,
   },
   secondaryButtonText: {
     fontFamily: Fonts.medium,
     fontSize: 14,
-    color: Colors.light.primary,
+    color: colors.primary,
   },
   footerText: {
     position: 'absolute',
     bottom: 40,
     fontFamily: Fonts.medium,
     fontSize: 11,
-    color: Colors.light.outlineVariant,
+    color: colors.outlineVariant,
     letterSpacing: 2,
     textAlign: 'center',
   },

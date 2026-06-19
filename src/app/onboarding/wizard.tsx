@@ -1,4 +1,6 @@
+import React from 'react';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -11,6 +13,9 @@ import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 const { width } = Dimensions.get('window');
 
 export default function OnboardingWizard() {
+  const { colors } = useThemeContext();
+  const styles = React.useMemo(() => createStyles(colors), [colors]);
+
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -46,7 +51,7 @@ export default function OnboardingWizard() {
       <View style={styles.header}>
         <View style={styles.headerActions}>
           <TouchableOpacity onPress={handleBack} style={styles.iconButton}>
-            <MaterialSymbol name="arrow_forward" size={24} color={Colors.light.onSurface} />
+            <MaterialSymbol name="arrow_forward" size={24} color={colors.onSurface} />
           </TouchableOpacity>
           <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
             <Text style={styles.skipText}>تخطي</Text>
@@ -84,10 +89,10 @@ export default function OnboardingWizard() {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.light.background,
+    backgroundColor: colors.background,
   },
   header: {
     paddingHorizontal: Spacing.four,
@@ -104,11 +109,11 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.light.surfaceContainerLowest,
+    backgroundColor: colors.surfaceContainerLowest,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: Colors.light.outlineVariant,
+    borderColor: colors.outlineVariant,
   },
   skipButton: {
     paddingHorizontal: Spacing.two,
@@ -117,7 +122,7 @@ const styles = StyleSheet.create({
   skipText: {
     fontFamily: Fonts.medium,
     fontSize: 16,
-    color: Colors.light.outline,
+    color: colors.outline,
   },
   progressContainer: {
     flexDirection: 'row-reverse', // To align with RTL naturally
@@ -130,10 +135,10 @@ const styles = StyleSheet.create({
     borderRadius: 2,
   },
   progressBarActive: {
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
   },
   progressBarInactive: {
-    backgroundColor: Colors.light.surfaceVariant,
+    backgroundColor: colors.surfaceVariant,
   },
   contentArea: {
     flex: 1,
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
   nextButton: {
     width: '100%',
     height: 56,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: colors.primary,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -158,6 +163,6 @@ const styles = StyleSheet.create({
   nextButtonText: {
     fontFamily: Fonts.medium,
     fontSize: 18,
-    color: Colors.light.onPrimary,
+    color: colors.onPrimary,
   },
 });
