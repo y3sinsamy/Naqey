@@ -37,6 +37,14 @@ export default function ProfileScreen() {
             </View>
             <MaterialIcons name="chevron-left" size={24} color={colors.outline} />
           </TouchableOpacity>
+          <View style={styles.divider} />
+          <TouchableOpacity style={styles.actionRow} onPress={() => router.push('/profile/saved-articles')}>
+            <View style={styles.settingInfo}>
+              <MaterialIcons name="bookmark" size={24} color={colors.primary} />
+              <Text style={styles.actionText}>المقالات المحفوظة</Text>
+            </View>
+            <MaterialIcons name="chevron-left" size={24} color={colors.outline} />
+          </TouchableOpacity>
         </Card>
       </View>
 
