@@ -18,6 +18,7 @@ const INITIAL_MESSAGES = [
   { id: '1', text: 'مرحباً، كيف يمكنني مساعدتك اليوم؟', sender: 'doctor', timestamp: '10:00 ص' },
   { id: '2', text: 'أشعر ببعض القلق وأريد التحدث.', sender: 'patient', timestamp: '10:05 ص' },
   { id: '3', text: 'لا تقلق، أنا هنا لدعمك. هل حدث شيء معين جعلك تشعر بذلك؟', sender: 'doctor', timestamp: '10:06 ص' },
+  { id: 'session_1', isSessionCard: true, title: 'موعد الجلسة القادمة', date: 'اليوم، 10:30 صباحاً', status: 'upcoming' },
 ];
 
 export default function DoctorChatScreen() {
@@ -58,7 +59,29 @@ export default function DoctorChatScreen() {
     }
   }, [messages]);
 
-  const renderMessage = ({ item }: { item: typeof INITIAL_MESSAGES[0] }) => {
+  const renderMessage = ({ item }: { item: any }) => {
+    if (item.isSessionCard) {
+      return (
+        <View style={styles.sessionCardWrapper}>
+          <View style={styles.sessionCard}>
+            <View style={styles.sessionCardHeader}>
+              <MaterialSymbol name="event_upcoming" size={24} color={colors.primary} fill={true} />
+              <Text style={styles.sessionCardTitle}>{item.title}</Text>
+            </View>
+            <Text style={styles.sessionCardDate}>{item.date}</Text>
+            <TouchableOpacity 
+              style={styles.sessionCardButton}
+              onPress={() => router.push(`/call/preview/${id}`)}
+              activeOpacity={0.7}
+            >
+              <MaterialSymbol name="videocam" size={20} color={colors.onPrimary} fill={true} />
+              <Text style={styles.sessionCardButtonText}>الدخول للمكالمة</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+
     const isPatient = item.sender === 'patient';
     const isRTL = I18nManager.isRTL;
 
@@ -229,6 +252,57 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 12,
     color: colors.onSurfaceVariant,
     overflow: 'hidden',
+  },
+  sessionCardWrapper: {
+    alignItems: 'center',
+    marginVertical: Spacing.four,
+  },
+  sessionCard: {
+    width: '85%',
+    backgroundColor: colors.surfaceContainerLowest,
+    borderRadius: 16,
+    padding: Spacing.four,
+    borderWidth: 1,
+    borderColor: colors.primaryContainer,
+    alignItems: 'center',
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+  sessionCardHeader: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    gap: Spacing.two,
+    marginBottom: Spacing.two,
+  },
+  sessionCardTitle: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 16,
+    color: colors.onSurface,
+  },
+  sessionCardDate: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: colors.onSurfaceVariant,
+    marginBottom: Spacing.four,
+  },
+  sessionCardButton: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: Spacing.two,
+    backgroundColor: colors.primary,
+    paddingVertical: Spacing.three,
+    paddingHorizontal: Spacing.five,
+    borderRadius: 24,
+    width: '100%',
+  },
+  sessionCardButtonText: {
+    fontFamily: Fonts.bold,
+    fontSize: 14,
+    color: colors.onPrimary,
   },
   messageWrapper: {
     flexDirection: 'row-reverse',

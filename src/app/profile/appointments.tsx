@@ -90,7 +90,11 @@ export default function MyAppointmentsScreen() {
       </View>
       
       {item.status === 'upcoming' ? (
-        <TouchableOpacity style={styles.actionButton}>
+        <TouchableOpacity 
+          style={styles.actionButton}
+          onPress={() => router.push(`/call/preview/${item.id}`)}
+          activeOpacity={0.7}
+        >
           <Text style={styles.actionButtonText}>الدخول للجلسة</Text>
         </TouchableOpacity>
       ) : item.status === 'completed' ? (
