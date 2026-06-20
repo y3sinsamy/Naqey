@@ -1,4 +1,4 @@
-import { Spacing } from '@/constants/theme';
+import { Spacing, Fonts } from '@/constants/theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -136,7 +136,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   headerTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: colors.onSurface,
   },
   backButton: {
@@ -161,12 +161,13 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   name: {
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: colors.onSurface,
     marginBottom: 4,
   },
   email: {
     fontSize: 16,
+    fontFamily: Fonts.regular,
     color: colors.textSecondary,
   },
   settingsSection: {
@@ -174,7 +175,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: Fonts.semiBold,
     color: colors.textSecondary,
     marginBottom: Spacing.three,
     textAlign: 'right',
@@ -202,11 +203,12 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   settingText: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: Fonts.medium,
     color: colors.onSurface,
   },
   actionText: {
     fontSize: 16,
+    fontFamily: Fonts.regular,
     color: colors.onSurface,
   },
   divider: {
@@ -229,7 +231,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: colors.onErrorContainer,
   },
 });

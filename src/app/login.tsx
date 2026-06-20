@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, SafeAreaView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useRouter } from 'expo-router';
 
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors, Spacing, Fonts } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
 import { Button } from '@/components/ui/Button';
 
@@ -95,12 +95,13 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: Fonts.bold,
     color: colors.onSurface,
     marginBottom: Spacing.one,
   },
   subtitle: {
     fontSize: 16,
+    fontFamily: Fonts.regular,
     color: colors.textSecondary,
   },
   form: {
@@ -111,7 +112,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '500',
+    fontFamily: Fonts.medium,
     color: colors.onSurface,
     marginBottom: Spacing.two,
     textAlign: 'right',
@@ -124,6 +125,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingVertical: 14,
     fontSize: 16,
+    fontFamily: Fonts.regular,
     color: colors.text,
   },
   submitButton: {
@@ -137,6 +139,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   footerText: {
     color: colors.textSecondary,
+    fontFamily: Fonts.regular,
     fontSize: 14,
   },
 });

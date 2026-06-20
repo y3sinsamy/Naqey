@@ -26,6 +26,11 @@ export const Colors = {
     onSurface: '#111c2d',
     surfaceVariant: '#d8e3fb',
     onSurfaceVariant: '#3c4947',
+    surfaceContainerLowest: '#ffffff',
+    surfaceContainerLow: '#f6f9fc',
+    surfaceContainer: '#eef2f9',
+    surfaceContainerHigh: '#e5ebf5',
+    surfaceContainerHighest: '#dce3f0',
     textSecondary: '#6c7a77', // outline
     backgroundElement: '#f0f3ff', // surface-container-low
     backgroundSelected: '#e7eeff', // surface-container
@@ -56,6 +61,11 @@ export const Colors = {
     onSurface: '#e1e3df',
     surfaceVariant: '#3f4947',
     onSurfaceVariant: '#bec9c6',
+    surfaceContainerLowest: '#0d1521',
+    surfaceContainerLow: '#111c2d',
+    surfaceContainer: '#162235',
+    surfaceContainerHigh: '#1c293f',
+    surfaceContainerHighest: '#24324a',
     textSecondary: '#899390',
     backgroundElement: '#1b2636',
     backgroundSelected: '#263143',

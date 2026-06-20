@@ -20,11 +20,10 @@ export const MaterialSymbol: React.FC<MaterialSymbolProps> = ({
     <Text
       style={[
         {
-          fontFamily: 'MaterialSymbolsOutlined-Variable',
+          fontFamily: fill ? 'MaterialSymbolsOutlined-Filled' : 'MaterialSymbolsOutlined-Variable',
           fontSize: size,
           color,
           lineHeight: size,
-          fontVariationSettings: `'FILL' ${fill ? 1 : 0}, 'wght' 400, 'GRAD' 0, 'opsz' 24`,
         },
         style,
       ]}

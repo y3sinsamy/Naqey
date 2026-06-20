@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet, PressableProps, ViewStyle, TextStyle, ActivityIndicator, StyleProp } from 'react-native';
-import { Colors, Spacing } from '@/constants/theme';
+import { Colors, Spacing, Fonts } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
 interface ButtonProps extends PressableProps {
   title: string;
@@ -91,7 +91,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: Fonts.semiBold,
     textAlign: 'center',
   },
 });

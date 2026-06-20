@@ -27,6 +27,7 @@ export default function RootLayout() {
     IBMPlexSansArabic_700Bold,
     MaterialSymbolsOutlined_400Regular,
     'MaterialSymbolsOutlined-Variable': require('@/assets/fonts/MaterialSymbolsOutlined-Variable.ttf'),
+    'MaterialSymbolsOutlined-Filled': require('@/assets/fonts/MaterialSymbolsOutlined-Filled.ttf'),
   });
 
   useEffect(() => {

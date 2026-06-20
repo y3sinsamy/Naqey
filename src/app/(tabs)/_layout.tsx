@@ -1,7 +1,7 @@
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { Tabs } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Platform } from 'react-native';
 
 import { useThemeContext } from '@/hooks/use-theme';
 
@@ -23,12 +23,18 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: -4 },
           shadowOpacity: 0.08,
           shadowRadius: 20,
-          height: 70,
-          paddingHorizontal: Spacing.half,
-          paddingBottom: 16,
-          paddingTop: 8,
-          flexDirection: 'row',
-          direction: 'rtl'
+          height: Platform.OS === 'ios' ? 90 : 80,
+          flexDirection: 'row-reverse',
+        },
+        tabBarItemStyle: {
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingVertical: 8,
+        },
+        tabBarIconStyle: {
+          flex: 1,
+          width: '100%',
+          height: '100%',
         },
       }}><Tabs.Screen
         name="chat"

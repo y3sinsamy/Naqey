@@ -81,7 +81,7 @@ export default function DashboardScreen() {
 
               <TouchableOpacity style={styles.moodButton} onPress={() => router.navigate('/recovery')}>
                 <MaterialSymbol name="mood" size={20} color={colors.onPrimaryContainer} fill={true} />
-                <Text style={styles.moodButtonText}>تقييم الحالة المزاجية</Text>
+                <Text style={styles.moodButtonText} numberOfLines={1}>تقييم الحالة المزاجية</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -194,6 +194,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: Spacing.four,
+    marginTop: Spacing.three,
     height: 64,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
@@ -298,7 +299,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
     borderRadius: 20,
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     gap: 8,
   },
@@ -306,6 +307,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontFamily: Fonts.medium,
     fontSize: 12,
     color: colors.onPrimaryContainer,
+    textAlign: 'center'
   },
   actionsGrid: {
     flexDirection: 'row',
