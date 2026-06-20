@@ -27,10 +27,13 @@ export default function DashboardScreen() {
     <SafeAreaView style={styles.safeArea}>
       {/* Top AppBar */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.iconButton} onPress={() => router.push('/profile')}>
-          <Image 
-            source="https://i.pravatar.cc/150?img=11" 
-            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant }} 
+        <TouchableOpacity
+          style={[styles.iconButton, { borderWidth: 2, borderColor: colors.primary }]}
+          onPress={() => router.push('/profile')}
+        >
+          <Image
+            source="https://i.pravatar.cc/150?img=11"
+            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant }}
           />
         </TouchableOpacity>
         <Text style={styles.brandTitle}>نقي</Text>
@@ -121,34 +124,26 @@ export default function DashboardScreen() {
           />
         </ScrollView>
 
-        {/* Community Section */}
-        <View style={styles.communityGrid}>
-          <View style={[styles.communityCard, { backgroundColor: 'rgba(20, 184, 166, 0.1)' }]}>
-            <Text style={styles.communityTitle}>مجموعات الدعم</Text>
-            <Text style={styles.communitySubtitle}>انضم لآلاف المحاربين في رحلتهم.</Text>
-
-            <View style={styles.avatarGroup}>
-              {/* Mocking overlapping avatars using simple views for now */}
-              <View style={[styles.avatarCircle, { zIndex: 3, right: 0 }]} />
-              <View style={[styles.avatarCircle, { zIndex: 2, right: 20, backgroundColor: colors.secondary }]} />
-              <View style={[styles.avatarCircle, { zIndex: 1, right: 40, backgroundColor: colors.tertiary }]} />
-              <View style={[styles.avatarPlus, { right: 60 }]}>
-                <Text style={styles.avatarPlusText}>+50</Text>
-              </View>
-            </View>
-            <MaterialSymbol name="groups" size={80} color={colors.primary} style={styles.bgIconLeft} />
-          </View>
-
-          <View style={[styles.communityCard, { backgroundColor: 'rgba(57, 184, 253, 0.1)', borderColor: 'rgba(57, 184, 253, 0.2)', borderWidth: 1 }]}>
-            <View>
-              <Text style={[styles.communityTitle, { color: colors.onSecondaryContainer }]}>تحدي الأسبوع</Text>
-              <Text style={[styles.communitySubtitle, { color: colors.onSecondaryContainer }]}>أكمل 7 أيام بدون تواصل مع محفزات قديمة.</Text>
-            </View>
-            <View style={styles.progressBarBg}>
-              <View style={[styles.progressBarFill, { width: '65%' }]} />
-            </View>
-          </View>
+        {/* My Sessions Section */}
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>مواعيدي</Text>
         </View>
+        <TouchableOpacity
+          style={[styles.trackerCard, { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: Spacing.six }]}
+          onPress={() => router.push('/profile/appointments')}
+          activeOpacity={0.7}
+        >
+          <View style={{ flexDirection: 'row-reverse', alignItems: 'center', gap: Spacing.three }}>
+            <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: colors.primaryContainer, alignItems: 'center', justifyContent: 'center' }}>
+              <MaterialSymbol name="event_upcoming" size={24} color={colors.onPrimaryContainer} fill={true} />
+            </View>
+            <View style={{ alignItems: 'flex-end' }}>
+              <Text style={{ fontFamily: Fonts.semiBold, fontSize: 16, color: colors.onSurface, marginBottom: 2 }}>الجلسات القادمة</Text>
+              <Text style={{ fontFamily: Fonts.regular, fontSize: 13, color: colors.onSurfaceVariant }}>تحقق من مواعيد جلساتك مع الأطباء</Text>
+            </View>
+          </View>
+          <MaterialSymbol name="chevron_left" size={24} color={colors.outline} />
+        </TouchableOpacity>
 
       </ScrollView>
 
@@ -349,7 +344,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     textAlign: 'center',
   },
   sectionHeader: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: Spacing.three,
@@ -371,6 +366,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   tipsContent: {
     paddingHorizontal: Spacing.four,
     gap: Spacing.three,
+    flexDirection: 'row-reverse',
   },
   tipCard: {
     width: 260,
@@ -381,7 +377,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     borderColor: 'rgba(187, 202, 198, 0.2)',
   },
   tipHeader: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     gap: 8,
     marginBottom: Spacing.two,
@@ -400,7 +396,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 14,
     color: colors.onSurface,
     lineHeight: 22,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   communityGrid: {
     flexDirection: 'row',

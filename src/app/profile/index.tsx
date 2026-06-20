@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 're
 
 import { Card } from '@/components/ui/Card';
 import { useThemeContext } from '@/hooks/use-theme';
+import { Image } from 'expo-image';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -16,12 +17,23 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <MaterialIcons name="chevron-right" size={28} color={colors.onSurface} />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>حسابي</Text>
+        <View style={styles.backButton} />
       </View>
 
       <View style={styles.profileSection}>
-        <View style={styles.avatar}>
-          <MaterialIcons name="person" size={48} color={colors.primary} />
+        <View style={[styles.avatar, { 
+          width: 104, 
+          height: 104, 
+          borderRadius: 52, 
+          borderWidth: 2, 
+          borderColor: colors.primary, 
+          backgroundColor: 'transparent' 
+        }]}>
+          <Image source="https://i.pravatar.cc/150?img=11" style={{ width: 96, height: 96, borderRadius: 48 }} />
         </View>
         <Text style={styles.name}>أحمد محمد</Text>
         <Text style={styles.email}>ahmed@example.com</Text>
@@ -114,6 +126,9 @@ const createStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
+    flexDirection: 'row-reverse',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     padding: Spacing.four,
     paddingTop: Spacing.six,
     backgroundColor: colors.surface,
@@ -121,10 +136,15 @@ const createStyles = (colors: any) => StyleSheet.create({
     borderBottomColor: colors.surfaceVariant,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700',
     color: colors.onSurface,
-    textAlign: 'right',
+  },
+  backButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   profileSection: {
     alignItems: 'center',
