@@ -1,14 +1,25 @@
-import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
+import { useRouter } from 'expo-router';
+import React from 'react';
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Svg, { Circle } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
-import { useThemeContext } from '@/hooks/use-theme';
 
 export default function DashboardScreen() {
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
+  const router = useRouter();
+
+  const currentDays = 12;
+  const targetDays = 90;
+  const radius = 54;
+  const strokeWidth = 8;
+  const circumference = 2 * Math.PI * radius;
+  const progress = currentDays / targetDays;
+  const strokeDashoffset = circumference - progress * circumference;
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -33,13 +44,25 @@ export default function DashboardScreen() {
         {/* Hero: Recovery Tracker */}
         <View style={styles.trackerCard}>
           <View style={styles.trackerContent}>
-            {/* Mock Circular Progress */}
+            {/* Circular Progress */}
             <View style={styles.circularProgressContainer}>
-              <View style={styles.circularProgressOuter}>
-                <View style={styles.circularProgressInner}>
-                  <Text style={styles.progressValue}>12</Text>
-                  <Text style={styles.progressUnit}>يوماً</Text>
-                </View>
+              <Svg width="120" height="120" viewBox="0 0 120 120" style={{ transform: [{ rotate: '-90deg' }] }}>
+                <Circle cx="60" cy="60" r={radius} stroke={colors.surfaceContainerLow} strokeWidth={strokeWidth} fill="none" />
+                <Circle
+                  cx="60"
+                  cy="60"
+                  r={radius}
+                  stroke={colors.primary}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  fill="none"
+                  strokeLinecap="round"
+                />
+              </Svg>
+              <View style={[StyleSheet.absoluteFill, styles.circularProgressInner]}>
+                <Text style={styles.progressValue}>{currentDays}</Text>
+                <Text style={styles.progressUnit}>يوماً</Text>
               </View>
             </View>
 
@@ -48,7 +71,7 @@ export default function DashboardScreen() {
               <Text style={styles.trackerTitle}>رحلة التعافي</Text>
               <Text style={styles.trackerDescription}>لقد أكملت 13% من هدف الـ 90 يوماً. استمر في التقدم!</Text>
 
-              <TouchableOpacity style={styles.moodButton}>
+              <TouchableOpacity style={styles.moodButton} onPress={() => router.navigate('/recovery')}>
                 <MaterialSymbol name="mood" size={20} color={colors.onPrimaryContainer} fill={true} />
                 <Text style={styles.moodButtonText}>تقييم الحالة المزاجية</Text>
               </TouchableOpacity>
@@ -58,18 +81,15 @@ export default function DashboardScreen() {
 
         {/* Grid of Quick Actions */}
         <View style={styles.actionsGrid}>
-          <ActionCard icon="medical_services" label="ابحث عن طبيب" bg={colors.secondaryFixed} iconColor={colors.onSecondaryFixedVariant} />
-          <ActionCard icon="event_available" label="احجز جلسة" bg={colors.tertiaryFixed} iconColor={colors.onTertiaryFixedVariant} />
-          <ActionCard icon="forum" label="تحدث مع طفران" bg={colors.primaryFixed} iconColor={colors.onPrimaryFixedVariant} />
-          <ActionCard icon="menu_book" label="مقالات التعافي" bg="rgba(57, 184, 253, 0.2)" iconColor={colors.secondary} />
+          <ActionCard icon="edit_note" label="دوّن يومياتك" bg={colors.primary + '55'} iconColor={colors.primary} onPress={() => router.push('/recovery/journal/new')} />
+          <ActionCard icon="event_available" label="احجز جلسة" bg={colors.secondary + '55'} iconColor={colors.secondary} onPress={() => router.navigate('/doctors')} />
+          <ActionCard icon="forum" label="تحدث مع طفران" bg={colors.tertiary + '55'} iconColor={colors.tertiary} onPress={() => router.push('/chat')} />
+          <ActionCard icon="menu_book" label="مقالات التعافي" bg={colors.primaryContainer + '55'} iconColor={colors.onPrimaryContainer} onPress={() => router.navigate('/articles')} />
         </View>
 
         {/* Recovery Tips */}
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>نصائح التعافي</Text>
-          <TouchableOpacity>
-            <Text style={styles.seeAllText}>عرض الكل</Text>
-          </TouchableOpacity>
         </View>
 
         <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tipsScrollView} contentContainerStyle={styles.tipsContent}>
@@ -128,18 +148,18 @@ export default function DashboardScreen() {
       </ScrollView>
 
       {/* FAB: AI Assistant */}
-      <TouchableOpacity style={styles.fab}>
+      <TouchableOpacity style={styles.fab} onPress={() => router.push('/chat')}>
         <MaterialSymbol name="smart_toy" size={28} color={colors.onPrimary} />
       </TouchableOpacity>
     </SafeAreaView>
   );
 }
 
-function ActionCard({ icon, label, bg, iconColor }: { icon: string, label: string, bg: string, iconColor: string }) {
+function ActionCard({ icon, label, bg, iconColor, onPress }: { icon: string, label: string, bg: string, iconColor: string, onPress?: () => void }) {
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
   return (
-    <TouchableOpacity style={styles.actionCard} activeOpacity={0.7}>
+    <TouchableOpacity style={styles.actionCard} activeOpacity={0.7} onPress={onPress}>
       <View style={[styles.actionIconWrapper, { backgroundColor: bg }]}>
         <MaterialSymbol name={icon} size={24} color={iconColor} fill={true} />
       </View>
@@ -240,21 +260,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  circularProgressOuter: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: colors.surfaceContainerLow, // Fallback for pure CSS conic gradient
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 6,
-    borderColor: colors.primary, // Simplified progress representation
-  },
   circularProgressInner: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: colors.surfaceContainerLowest,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -468,7 +474,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   fab: {
     position: 'absolute',
     bottom: 24,
-    left: 24, // RTL position left is bottom-start visually in LTR terms but left is left. Usually FAB is bottom-right or bottom-left depending on locale. The HTML said `left-6`.
+    left: 24,
     width: 56,
     height: 56,
     borderRadius: 28,
