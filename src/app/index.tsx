@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, StyleSheet, Text, SafeAreaView, Pressable, Dimensions } from 'react-native';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import { Dimensions, Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
-import { Colors, Fonts, Spacing } from '@/constants/theme';
-import { useThemeContext } from '@/hooks/use-theme';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
+import { Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,7 +24,11 @@ export default function WelcomeScreen() {
         {/* Brand Identity / Mark */}
         <View style={styles.logoContainer}>
           <View style={styles.iconWrapper}>
-            <MaterialSymbol name="spa" size={36} color={colors.onPrimaryContainer} fill={true} />
+            <Image
+              source={require('@/assets/NaqeyIcon.png')}
+              style={{ width: '90%', height: '80%' }}
+              resizeMode="contain"
+            />
           </View>
           <Text style={styles.brandName}>نقي</Text>
         </View>
@@ -32,7 +36,7 @@ export default function WelcomeScreen() {
         {/* Hero Typography */}
         <View style={styles.heroSection}>
           <Text style={styles.headline}>رحلة التعافي تبدأ بخطوة</Text>
-          <Text style={styles.subtitle}>Private and secure recovery journey</Text>
+          <Text style={styles.subtitle}>رحلة علاج آمنة وبسرية تامة</Text>
         </View>
 
         {/* Trust Indicators */}
@@ -50,13 +54,13 @@ export default function WelcomeScreen() {
 
         {/* Call to Action Section */}
         <View style={styles.actionSection}>
-          <Pressable 
+          <Pressable
             style={({ pressed }) => [styles.primaryButton, pressed && styles.buttonPressed]}
             onPress={() => router.push('/onboarding/wizard')}
           >
             <Text style={styles.primaryButtonText}>ابدأ الآن</Text>
           </Pressable>
-          <Pressable 
+          <Pressable
             style={({ pressed }) => [styles.secondaryButton, pressed && styles.secondaryButtonPressed]}
             onPress={() => router.push('/login')}
           >
@@ -115,7 +119,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   iconWrapper: {
     width: 80,
     height: 80,
-    backgroundColor: colors.primaryContainer,
+    backgroundColor: colors.background,
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,8 +1,9 @@
-import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function HowItWorksStep() {
   const { colors } = useThemeContext();
@@ -35,7 +36,15 @@ export default function HowItWorksStep() {
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false}>
       {/* Animated Hero Visual Placeholder */}
       <View style={styles.heroVisual}>
-        <Text style={styles.heroText}>Naqi</Text>
+        <Image
+          source={{ uri: 'https://images.unsplash.com/photo-1758691463620-188ca7c1a04f?q=80&w=1032&auto=format&fit=crop' }}
+          style={{ width: '100%', height: '100%' }}
+          resizeMode="cover"
+        />
+        <LinearGradient
+          colors={['transparent', colors.primary]}
+          style={StyleSheet.absoluteFill}
+        />
       </View>
 
       {/* Headline Section */}
@@ -81,6 +90,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: Spacing.four,
+    overflow: 'hidden',
   },
   heroText: {
     fontFamily: Fonts.bold,
@@ -110,7 +120,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     gap: Spacing.three,
   },
   stepCard: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'flex-start',
     backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.four,
@@ -130,8 +140,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: Spacing.three, // actually left since we might do RTL layout, let's use marginEnd or just swap
-    marginLeft: 16, // using marginLeft because of RTL context, the icon goes on the right side if RTL. React Native automatically flips if I18nManager.isRTL is true. Let's assume standard behavior for Arabic.
+    marginLeft: Spacing.three,
   },
   stepTextContainer: {
     flex: 1,
@@ -141,13 +150,13 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 18,
     color: colors.primary,
     marginBottom: 4,
-    textAlign: 'left', // Keep default, let RTL handle it
+    textAlign: 'right',
   },
   stepDescription: {
     fontFamily: Fonts.medium,
     fontSize: 14,
     color: colors.onSurfaceVariant,
     lineHeight: 20,
-    textAlign: 'left',
+    textAlign: 'right',
   },
 });

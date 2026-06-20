@@ -1,7 +1,7 @@
-import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
+import React from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -11,10 +11,10 @@ export default function PrivacyAssuranceStep() {
   const styles = React.useMemo(() => createStyles(colors), [colors]);
 
   const points = [
-    { icon: 'person_pin', title: 'يسمح بالاسم المستعار', colorBg: colors.secondaryFixed, colorIcon: colors.onSecondaryFixedVariant },
-    { icon: 'encrypted', title: 'مدفوعات آمنة', colorBg: colors.tertiaryFixed, colorIcon: colors.onTertiaryFixedVariant },
-    { icon: 'visibility_off', title: 'خصوصية الجلسات', colorBg: colors.primaryFixed, colorIcon: colors.onPrimaryFixedVariant },
-    { icon: 'sticky_note_2', title: 'ملاحظات شخصية', colorBg: 'rgba(57, 184, 253, 0.2)', colorIcon: colors.secondary }, // secondaryContainer with opacity
+    { icon: 'person_pin', title: 'يسمح بالاسم المستعار' },
+    { icon: 'encrypted', title: 'مدفوعات آمنة' },
+    { icon: 'visibility_off', title: 'خصوصية الجلسات' },
+    { icon: 'sticky_note_2', title: 'ملاحظات شخصية' },
   ];
 
   return (
@@ -38,8 +38,8 @@ export default function PrivacyAssuranceStep() {
       <View style={styles.gridContainer}>
         {points.map((point, index) => (
           <View key={index} style={styles.privacyCard}>
-            <View style={[styles.cardIconWrapper, { backgroundColor: point.colorBg }]}>
-              <MaterialSymbol name={point.icon} size={28} color={point.colorIcon} fill={true} />
+            <View style={styles.cardIconWrapper}>
+              <MaterialSymbol name={point.icon} size={28} fill={true} />
             </View>
             <Text style={styles.cardTitle}>{point.title}</Text>
           </View>
@@ -66,7 +66,6 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: Spacing.four,
-    paddingBottom: Spacing.four,
     alignItems: 'center',
   },
   heroSection: {
@@ -142,13 +141,12 @@ const createStyles = (colors: any) => StyleSheet.create({
     textAlign: 'center',
   },
   trustIndicator: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     alignItems: 'center',
     backgroundColor: colors.surfaceContainer,
     padding: Spacing.three,
     borderRadius: 16,
     width: '100%',
-    marginBottom: Spacing.four,
   },
   trustIconWrapper: {
     width: 40,
@@ -157,7 +155,6 @@ const createStyles = (colors: any) => StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: 16, // RTL equivalent of margin-right
   },
   trustTextContainer: {
     flex: 1,
@@ -169,12 +166,12 @@ const createStyles = (colors: any) => StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 2,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   trustDescription: {
     fontFamily: Fonts.regular,
     fontSize: 14,
     color: colors.onSurface,
-    textAlign: 'left',
+    textAlign: 'right',
   },
 });

@@ -1,7 +1,7 @@
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { Tabs } from 'expo-router';
-import { StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { useThemeContext } from '@/hooks/use-theme';
 
@@ -27,15 +27,15 @@ export default function TabLayout() {
           paddingHorizontal: Spacing.half,
           paddingBottom: 16,
           paddingTop: 8,
-          flexDirection: 'row-reverse', // To support RTL navigation visual ordering
+          flexDirection: 'row',
+          direction: 'rtl'
         },
-      }}>
-      <Tabs.Screen
-        name="index"
+      }}><Tabs.Screen
+        name="chat"
         options={{
-          title: 'الرئيسية',
+          title: 'الرسائل',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="home" title="الرئيسية" colors={colors} />
+            <TabIcon focused={focused} name="forum" title="الرسائل" colors={colors} />
           ),
         }}
       />
@@ -49,11 +49,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="recovery"
+        name="index"
         options={{
-          title: 'التعافي',
+          title: 'الرئيسية',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="rebase_edit" title="التعافي" colors={colors} />
+            <TabIcon focused={focused} name="home" title="الرئيسية" colors={colors} />
           ),
         }}
       />
@@ -67,11 +67,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="chat"
+        name="recovery"
         options={{
-          title: 'الرسائل',
+          title: 'التعافي',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="forum" title="الرسائل" colors={colors} />
+            <TabIcon focused={focused} name="rebase_edit" title="التعافي" colors={colors} />
           ),
         }}
       />

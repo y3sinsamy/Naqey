@@ -214,7 +214,7 @@ export default function SearchScreen() {
               placeholderTextColor={colors.outline}
               value={searchQuery}
               onChangeText={setSearchQuery}
-              textAlign="right"
+              dir='rtl'
             />
           </View>
           <TouchableOpacity style={styles.filterIconButton} onPress={openFilterModal}>
@@ -287,19 +287,6 @@ export default function SearchScreen() {
               <Text style={styles.filterSectionTitle}>نطاق السعر (ج.م)</Text>
               <View style={styles.priceRow}>
                 <View style={styles.priceInputWrapper}>
-                  <Text style={styles.priceLabel}>إلى</Text>
-                  <TextInput
-                    style={styles.priceInput}
-                    keyboardType="numeric"
-                    placeholder="الأعلى"
-                    placeholderTextColor={colors.outline}
-                    value={draftFilters.maxPrice}
-                    onChangeText={val => setDraftFilters(prev => ({ ...prev, maxPrice: val }))}
-                    textAlign="center"
-                  />
-                </View>
-                <Text style={styles.priceDash}>-</Text>
-                <View style={styles.priceInputWrapper}>
                   <Text style={styles.priceLabel}>من</Text>
                   <TextInput
                     style={styles.priceInput}
@@ -308,7 +295,18 @@ export default function SearchScreen() {
                     placeholderTextColor={colors.outline}
                     value={draftFilters.minPrice}
                     onChangeText={val => setDraftFilters(prev => ({ ...prev, minPrice: val }))}
-                    textAlign="center"
+                  />
+                </View>
+                <Text style={styles.priceDash}>-</Text>
+                <View style={styles.priceInputWrapper}>
+                  <Text style={styles.priceLabel}>إلى</Text>
+                  <TextInput
+                    style={styles.priceInput}
+                    keyboardType="numeric"
+                    placeholder="الأعلى"
+                    placeholderTextColor={colors.outline}
+                    value={draftFilters.maxPrice}
+                    onChangeText={val => setDraftFilters(prev => ({ ...prev, maxPrice: val }))}
                   />
                 </View>
               </View>
@@ -333,7 +331,7 @@ export default function SearchScreen() {
 
               {/* Availability */}
               <View style={styles.switchRow}>
-                <Text style={styles.filterSectionTitle}>متاح اليوم فقط</Text>
+                <Text style={styles.filterSectionTitle}>متاح اليوم</Text>
                 <Switch
                   value={draftFilters.availableToday}
                   onValueChange={val => setDraftFilters(prev => ({ ...prev, availableToday: val }))}
@@ -378,8 +376,8 @@ const createStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.background,
   },
   header: {
+    paddingTop: Spacing.two,
     padding: Spacing.four,
-    paddingTop: Spacing.six,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.surfaceVariant,
@@ -388,7 +386,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontFamily: Fonts.bold,
     fontSize: 24,
     color: colors.onSurface,
-    marginBottom: Spacing.four,
+    marginBottom: Spacing.two,
     textAlign: 'right',
   },
   searchRow: {
@@ -413,6 +411,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: 16,
     color: colors.onSurface,
+    textAlign: "right",
   },
   filterIconButton: {
     width: 48,
@@ -486,7 +485,6 @@ const createStyles = (colors: any) => StyleSheet.create({
   listContainer: {
     padding: Spacing.four,
     gap: Spacing.four,
-    paddingBottom: 100,
   },
   doctorCard: {
     gap: Spacing.three,
@@ -635,6 +633,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     height: 48,
     fontFamily: Fonts.medium,
     color: colors.onSurface,
+    textAlign: 'center',
   },
   priceDash: {
     fontFamily: Fonts.bold,

@@ -1,8 +1,7 @@
-import React from 'react';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function CategorySelectionStep() {
@@ -108,20 +107,20 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   header: {
     marginBottom: Spacing.four,
-    alignItems: 'flex-start', // Because RTL, text-right equates to flex-start visually often, but we'll use string alignments
+    alignItems: 'flex-end',
   },
   headline: {
     fontFamily: Fonts.semiBold,
     fontSize: 28,
     color: colors.onSurface,
     marginBottom: Spacing.base,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   subtitle: {
     fontFamily: Fonts.regular,
     fontSize: 16,
     color: colors.onSurfaceVariant,
-    textAlign: 'left',
+    textAlign: 'right',
     lineHeight: 24,
   },
   sectionContainer: {
@@ -137,10 +136,10 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 18,
     color: colors.primary,
     marginBottom: Spacing.three,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   formRow: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     gap: Spacing.three,
     marginBottom: Spacing.three,
   },
@@ -153,7 +152,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 14,
     color: colors.onSurfaceVariant,
     marginBottom: Spacing.base,
-    textAlign: 'left',
+    textAlign: 'right',
   },
   input: {
     height: 56,
@@ -163,9 +162,10 @@ const createStyles = (colors: any) => StyleSheet.create({
     fontFamily: Fonts.regular,
     fontSize: 16,
     color: colors.onSurface,
+    textAlign: 'right',
   },
   genderRow: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     gap: Spacing.three,
   },
   genderButton: {
@@ -191,7 +191,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     color: colors.primary,
   },
   categoriesGrid: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     flexWrap: 'wrap',
     gap: Spacing.three,
     justifyContent: 'space-between',

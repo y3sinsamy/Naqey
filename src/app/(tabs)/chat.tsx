@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
@@ -48,8 +48,8 @@ export default function ChatsListScreen() {
   };
 
   const renderItem = ({ item }: { item: typeof CHATS[0] }) => (
-    <TouchableOpacity 
-      style={[styles.chatItem, item.pinned && styles.pinnedItem]} 
+    <TouchableOpacity
+      style={[styles.chatItem, item.pinned && styles.pinnedItem]}
       onPress={() => handlePress(item)}
       activeOpacity={0.7}
     >
@@ -63,7 +63,7 @@ export default function ChatsListScreen() {
         )}
         {item.isBot && <View style={styles.onlineIndicator} />}
       </View>
-      
+
       <View style={styles.chatInfo}>
         <View style={styles.chatHeader}>
           <View style={styles.nameRow}>
@@ -87,9 +87,7 @@ export default function ChatsListScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.appBar}>
-        <View style={styles.backButton} />
         <Text style={styles.headerTitle}>المحادثات</Text>
-        <View style={styles.backButton} />
       </View>
 
       <FlatList
@@ -110,10 +108,10 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   appBar: {
     flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: Spacing.two,
-    paddingVertical: Spacing.four,
+    paddingVertical: Spacing.two,
     borderBottomWidth: 1,
     borderBottomColor: colors.surfaceVariant,
     backgroundColor: colors.surface,
@@ -224,6 +222,6 @@ const createStyles = (colors: any) => StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: colors.surfaceVariant,
-    marginLeft: 88, // Avatar width + margins
+    marginRight: 88, // Avatar width + margins
   },
 });

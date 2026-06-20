@@ -36,7 +36,7 @@ export default function DashboardScreen() {
             style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant }}
           />
         </TouchableOpacity>
-        <Text style={styles.brandTitle}>نقي</Text>
+        <Image source={require('@/assets/NaqeyLogo.png')} style={{ width: 32 * 1080 / 407, height: 32 }} />
         <TouchableOpacity style={styles.iconButton}>
           <MaterialSymbol name="notifications" size={24} color={colors.primary} />
         </TouchableOpacity>
@@ -129,7 +129,7 @@ export default function DashboardScreen() {
           <Text style={styles.sectionTitle}>مواعيدي</Text>
         </View>
         <TouchableOpacity
-          style={[styles.trackerCard, { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: Spacing.six }]}
+          style={[styles.trackerCard, { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'space-between', marginBottom: Spacing.three }]}
           onPress={() => router.push('/profile/appointments')}
           activeOpacity={0.7}
         >
@@ -216,7 +216,6 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   content: {
     padding: Spacing.four,
-    paddingBottom: 100, // Make room for FAB and tab bar
   },
   greetingSection: {
     marginBottom: Spacing.four,

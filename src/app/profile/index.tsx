@@ -25,13 +25,13 @@ export default function ProfileScreen() {
       </View>
 
       <View style={styles.profileSection}>
-        <View style={[styles.avatar, { 
-          width: 104, 
-          height: 104, 
-          borderRadius: 52, 
-          borderWidth: 2, 
-          borderColor: colors.primary, 
-          backgroundColor: 'transparent' 
+        <View style={[styles.avatar, {
+          width: 104,
+          height: 104,
+          borderRadius: 52,
+          borderWidth: 2,
+          borderColor: colors.primary,
+          backgroundColor: 'transparent'
         }]}>
           <Image source="https://i.pravatar.cc/150?img=11" style={{ width: 96, height: 96, borderRadius: 48 }} />
         </View>
@@ -129,8 +129,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: Spacing.four,
-    paddingTop: Spacing.six,
+    padding: Spacing.two,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.surfaceVariant,

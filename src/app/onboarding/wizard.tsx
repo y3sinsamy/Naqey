@@ -1,8 +1,7 @@
-import React from 'react';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
+import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import CategorySelectionStep from '@/components/onboarding/CategorySelectionStep';
@@ -81,7 +80,7 @@ export default function OnboardingWizard() {
       <View style={styles.footer}>
         <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
           <Text style={styles.nextButtonText}>
-            {currentStep === steps.length - 1 ? 'إنهاء' : 'التالي'}
+            {currentStep === steps.length - 1 ? 'لنتعافى الآن!' : 'التالي'}
           </Text>
         </TouchableOpacity>
       </View>
@@ -100,7 +99,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     paddingBottom: Spacing.two,
   },
   headerActions: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: Spacing.four,

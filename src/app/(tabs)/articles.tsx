@@ -16,7 +16,7 @@ const MOCK_ARTICLES = [
     title: 'كيف تتعامل مع نوبات القلق المفاجئة في العمل؟',
     category: 'القلق',
     readTime: '5 دقائق',
-    image: 'https://images.unsplash.com/photo-1542662803-2f01b9f541db?q=80&w=870&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=890&auto=format&fit=crop',
     isSaved: true,
   },
   {
@@ -93,7 +93,7 @@ export default function ArticlesScreen() {
           placeholderTextColor={colors.onSurfaceVariant}
           value={searchQuery}
           onChangeText={setSearchQuery}
-          textAlign="right"
+          dir="rtl"
         />
       </View>
 
@@ -104,7 +104,7 @@ export default function ArticlesScreen() {
         activeOpacity={0.9}
       >
         <ImageBackground
-          source={{ uri: 'https://images.unsplash.com/photo-1542662803-2f01b9f541db?q=80&w=870&auto=format&fit=crop' }}
+          source={{ uri: 'https://images.unsplash.com/photo-1493836512294-502baa1986e2?q=80&w=890&auto=format&fit=crop' }}
           style={styles.shinyCard}
           imageStyle={styles.shinyCardImage}
         >
