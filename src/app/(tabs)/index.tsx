@@ -6,6 +6,8 @@ import React from 'react';
 import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
+import { Image } from 'expo-image';
+
 const { width } = Dimensions.get('window');
 
 export default function DashboardScreen() {
@@ -25,8 +27,11 @@ export default function DashboardScreen() {
     <SafeAreaView style={styles.safeArea}>
       {/* Top AppBar */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.iconButton}>
-          <MaterialSymbol name="menu" size={24} color={colors.primary} />
+        <TouchableOpacity style={styles.iconButton} onPress={() => router.push('/profile')}>
+          <Image 
+            source="https://i.pravatar.cc/150?img=11" 
+            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant }} 
+          />
         </TouchableOpacity>
         <Text style={styles.brandTitle}>نقي</Text>
         <TouchableOpacity style={styles.iconButton}>
@@ -83,7 +88,7 @@ export default function DashboardScreen() {
         <View style={styles.actionsGrid}>
           <ActionCard icon="edit_note" label="دوّن يومياتك" bg={colors.primary + '55'} iconColor={colors.primary} onPress={() => router.push('/recovery/journal/new')} />
           <ActionCard icon="event_available" label="احجز جلسة" bg={colors.secondary + '55'} iconColor={colors.secondary} onPress={() => router.navigate('/doctors')} />
-          <ActionCard icon="forum" label="تحدث مع طفران" bg={colors.tertiary + '55'} iconColor={colors.tertiary} onPress={() => router.push('/chat')} />
+          <ActionCard icon="forum" label="الرسائل" bg={colors.tertiary + '55'} iconColor={colors.tertiary} onPress={() => router.push('/chat')} />
           <ActionCard icon="menu_book" label="مقالات التعافي" bg={colors.primaryContainer + '55'} iconColor={colors.onPrimaryContainer} onPress={() => router.navigate('/articles')} />
         </View>
 
@@ -148,7 +153,7 @@ export default function DashboardScreen() {
       </ScrollView>
 
       {/* FAB: AI Assistant */}
-      <TouchableOpacity style={styles.fab} onPress={() => router.push('/chat')}>
+      <TouchableOpacity style={styles.fab} onPress={() => router.push('/chat/tafran')}>
         <MaterialSymbol name="smart_toy" size={28} color={colors.onPrimary} />
       </TouchableOpacity>
     </SafeAreaView>

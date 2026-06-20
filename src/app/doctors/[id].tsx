@@ -49,6 +49,13 @@ export default function DoctorProfileScreen() {
           </View>
           <Text style={styles.doctorName}>{DOCTOR_DETAILS.name}</Text>
           <Text style={styles.doctorSpecialty}>{DOCTOR_DETAILS.specialty}</Text>
+          <Button
+            title="تحدث مع الطبيب"
+            variant="outline"
+            size="small"
+            style={{ marginTop: Spacing.four, minWidth: 160 }}
+            onPress={() => router.push(`/chat/doctor/${id}` as any)}
+          />
         </View>
 
         {/* Stats Row */}

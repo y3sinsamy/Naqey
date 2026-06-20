@@ -67,11 +67,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="chat"
         options={{
-          title: 'الملف الشخصي',
+          title: 'الرسائل',
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} name="person" title="الملف الشخصي" colors={colors} />
+            <TabIcon focused={focused} name="forum" title="الرسائل" colors={colors} />
           ),
         }}
       />
