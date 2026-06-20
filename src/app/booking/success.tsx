@@ -57,7 +57,7 @@ export default function BookingSuccessScreen() {
         <Button 
           title="عرض المواعيد القادمة" 
           variant="outline"
-          onPress={() => router.replace('/(tabs)/profile')} 
+          onPress={() => router.replace('/profile/appointments')} 
         />
       </View>
     </SafeAreaView>

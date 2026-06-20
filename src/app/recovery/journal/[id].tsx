@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Alert } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
@@ -17,7 +17,7 @@ export default function JournalEditorScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   const { journals, addJournal, updateJournal, deleteJournal } = useRecoveryStore();
-  
+
   const isNew = id === 'new';
   const existingJournal = !isNew ? journals.find(j => j.id === id) : null;
 
@@ -74,14 +74,14 @@ export default function JournalEditorScreen() {
     }
   };
 
-  const displayDate = existingJournal 
+  const displayDate = existingJournal
     ? new Date(existingJournal.createdAt).toLocaleDateString('ar-SA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
     : new Date().toLocaleDateString('ar-SA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView 
-        style={{ flex: 1 }} 
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <View style={styles.appBar}>
@@ -107,7 +107,7 @@ export default function JournalEditorScreen() {
           )}
 
           <Text style={styles.dateText}>{displayDate}</Text>
-          
+
           <View style={styles.rightActions}>
             {isEditing && (
               <TouchableOpacity onPress={handleSave} disabled={!content.trim()}>
@@ -117,8 +117,8 @@ export default function JournalEditorScreen() {
           </View>
         </View>
 
-        <ScrollView 
-          style={styles.scrollArea} 
+        <ScrollView
+          style={styles.scrollArea}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: isEditing ? Spacing.four : 100 }}
         >
@@ -128,14 +128,14 @@ export default function JournalEditorScreen() {
             placeholderTextColor={colors.onSurfaceVariant}
             value={title}
             onChangeText={setTitle}
-            textAlign="right"
+            dir="rtl"
             editable={isEditing}
           />
 
           <View style={[styles.tagsContainer, isEditing && styles.tagsContainerEditing]}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tagsScroll}>
               {TAGS.map(tag => (
-                <TouchableOpacity 
+                <TouchableOpacity
                   key={tag}
                   style={[styles.tagChip, selectedTag === tag && styles.tagChipActive]}
                   onPress={() => isEditing && setSelectedTag(tag)}
@@ -156,7 +156,7 @@ export default function JournalEditorScreen() {
             value={content}
             onChangeText={setContent}
             multiline
-            textAlign="right"
+            dir="rtl"
             autoFocus={isNew}
             editable={isEditing}
           />
@@ -227,6 +227,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     color: colors.onSurface,
     marginBottom: Spacing.four,
     paddingHorizontal: Spacing.two,
+    textAlign: 'right',
   },
   tagsContainer: {
     marginBottom: Spacing.five,
@@ -267,12 +268,13 @@ const createStyles = (colors: any) => StyleSheet.create({
     color: colors.onSurface,
     lineHeight: 32,
     minHeight: 300,
+    textAlign: 'auto',
     textAlignVertical: 'top',
-    paddingHorizontal: Spacing.two,
+    paddingHorizontal: Spacing.three,
   },
   contentInputEditing: {
     backgroundColor: colors.surfaceContainerLowest,
-    padding: Spacing.four,
+    padding: Spacing.two,
     borderRadius: 16,
     borderWidth: 1,
     borderColor: colors.outlineVariant,

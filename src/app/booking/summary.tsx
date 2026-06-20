@@ -7,13 +7,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-
-// Mock data
-const DOCTOR_INFO = {
-  name: 'د. سارة خالد',
-  specialty: 'علاج سلوكي معرفي',
-  price: 150,
-};
+import { MOCK_DOCTORS } from '@/data/doctors';
 
 export default function BookingSummaryScreen() {
   const { doctorId, date, time } = useLocalSearchParams();
@@ -21,8 +15,10 @@ export default function BookingSummaryScreen() {
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
 
-  const tax = DOCTOR_INFO.price * 0.15;
-  const total = DOCTOR_INFO.price + tax;
+  const doctor = MOCK_DOCTORS.find(d => d.id === doctorId) || MOCK_DOCTORS[0];
+
+  const tax = doctor.price * 0.15;
+  const total = doctor.price + tax;
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -46,7 +42,7 @@ export default function BookingSummaryScreen() {
               <MaterialIcons name="person-outline" size={20} color={colors.primary} />
               <Text style={styles.label}>الطبيب:</Text>
             </View>
-            <Text style={styles.value}>{DOCTOR_INFO.name}</Text>
+            <Text style={styles.value}>{doctor.name}</Text>
           </View>
 
           <View style={styles.row}>
@@ -94,7 +90,7 @@ export default function BookingSummaryScreen() {
 
           <View style={styles.row}>
             <Text style={styles.priceLabel}>سعر الجلسة</Text>
-            <Text style={styles.priceValue}>{DOCTOR_INFO.price} ج.م</Text>
+            <Text style={styles.priceValue}>{doctor.price} ج.م</Text>
           </View>
           <View style={styles.row}>
             <Text style={styles.priceLabel}>ضريبة القيمة المضافة (15%)</Text>

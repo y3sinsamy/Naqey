@@ -1,4 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useMemo, useState } from 'react';
 import {
@@ -20,14 +21,7 @@ import { Card } from '@/components/ui/Card';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
 
-// Enhanced Mock Data
-const MOCK_DOCTORS = [
-  { id: '1', name: 'د. سارة خالد', specialty: 'علاج سلوكي معرفي', rating: 4.8, reviews: 124, price: 150, availableToday: true },
-  { id: '2', name: 'د. أحمد محمود', specialty: 'طب نفسي', rating: 4.9, reviews: 342, price: 200, availableToday: false },
-  { id: '3', name: 'د. نورة سعد', specialty: 'إرشاد أسري', rating: 4.7, reviews: 89, price: 120, availableToday: true },
-  { id: '4', name: 'د. يوسف علي', specialty: 'طب نفسي للأطفال', rating: 4.2, reviews: 45, price: 250, availableToday: true },
-  { id: '5', name: 'د. منى حسن', specialty: 'علاج سلوكي معرفي', rating: 3.8, reviews: 12, price: 90, availableToday: false },
-];
+import { MOCK_DOCTORS } from '@/data/doctors';
 
 const SPECIALTIES_LIST = ['علاج سلوكي معرفي', 'طب نفسي', 'إرشاد أسري', 'طب نفسي للأطفال', 'علاج الإدمان'];
 
@@ -175,7 +169,7 @@ export default function SearchScreen() {
     <Card style={styles.doctorCard} variant="elevated">
       <View style={styles.cardHeader}>
         <View style={styles.doctorAvatar}>
-          <MaterialIcons name="person" size={32} color={colors.primary} />
+          <Image source={item.avatar} style={{ width: 64, height: 64, borderRadius: 32 }} contentFit="cover" />
         </View>
         <View style={styles.doctorInfo}>
           <Text style={styles.doctorName}>{item.name}</Text>

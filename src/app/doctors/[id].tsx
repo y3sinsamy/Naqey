@@ -1,4 +1,5 @@
 import { MaterialIcons } from '@expo/vector-icons';
+import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -7,26 +8,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@/components/ui/Button';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-
-// Mock data until API is integrated
-const DOCTOR_DETAILS = {
-  id: '1',
-  name: 'د. سارة خالد',
-  specialty: 'علاج سلوكي معرفي',
-  rating: 4.8,
-  reviews: 124,
-  price: 150,
-  about: 'أخصائية نفسية متخصصة في العلاج السلوكي المعرفي (CBT) مع خبرة تتجاوز 10 سنوات في التعامل مع حالات القلق والتوتر الإدماني. تقدم الدعم بخطط علاجية مخصصة ومبنية على أسس علمية.',
-  experience: '10 سنوات',
-  patients: '+1,000',
-  languages: ['العربية', 'الإنجليزية'],
-};
+import { MOCK_DOCTORS } from '@/data/doctors';
 
 export default function DoctorProfileScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
+
+  const doctor = MOCK_DOCTORS.find(d => d.id === id) || MOCK_DOCTORS[0];
+  const languages = ['العربية', 'الإنجليزية'];
 
   return (
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
@@ -45,10 +36,10 @@ export default function DoctorProfileScreen() {
         {/* Header Profile Section */}
         <View style={styles.profileHeader}>
           <View style={styles.avatarContainer}>
-            <MaterialIcons name="person" size={48} color={colors.primary} />
+            <Image source={doctor.avatar} style={{ width: 96, height: 96, borderRadius: 48 }} contentFit="cover" />
           </View>
-          <Text style={styles.doctorName}>{DOCTOR_DETAILS.name}</Text>
-          <Text style={styles.doctorSpecialty}>{DOCTOR_DETAILS.specialty}</Text>
+          <Text style={styles.doctorName}>{doctor.name}</Text>
+          <Text style={styles.doctorSpecialty}>{doctor.specialty}</Text>
           <Button
             title="تحدث مع الطبيب"
             variant="outline"
@@ -64,15 +55,15 @@ export default function DoctorProfileScreen() {
             <View style={styles.statIconWrapper}>
               <MaterialIcons name="star" size={20} color="#FFB400" />
             </View>
-            <Text style={styles.statValue}>{DOCTOR_DETAILS.rating}</Text>
-            <Text style={styles.statLabel}>{DOCTOR_DETAILS.reviews} تقييم</Text>
+            <Text style={styles.statValue}>{doctor.rating}</Text>
+            <Text style={styles.statLabel}>{doctor.reviews} تقييم</Text>
           </View>
           <View style={styles.divider} />
           <View style={styles.statItem}>
             <View style={styles.statIconWrapper}>
               <MaterialIcons name="work-outline" size={20} color={colors.primary} />
             </View>
-            <Text style={styles.statValue}>{DOCTOR_DETAILS.experience}</Text>
+            <Text style={styles.statValue}>{doctor.experience}</Text>
             <Text style={styles.statLabel}>الخبرة</Text>
           </View>
           <View style={styles.divider} />
@@ -80,7 +71,7 @@ export default function DoctorProfileScreen() {
             <View style={styles.statIconWrapper}>
               <MaterialIcons name="people-outline" size={20} color={colors.primary} />
             </View>
-            <Text style={styles.statValue}>{DOCTOR_DETAILS.patients}</Text>
+            <Text style={styles.statValue}>{doctor.patients}</Text>
             <Text style={styles.statLabel}>المرضى</Text>
           </View>
         </View>
@@ -88,14 +79,14 @@ export default function DoctorProfileScreen() {
         {/* About Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>نبذة عن الطبيب</Text>
-          <Text style={styles.aboutText}>{DOCTOR_DETAILS.about}</Text>
+          <Text style={styles.aboutText}>{doctor.about}</Text>
         </View>
 
         {/* Languages */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>اللغات المتحدثة</Text>
           <View style={styles.languagesRow}>
-            {DOCTOR_DETAILS.languages.map((lang, index) => (
+            {languages.map((lang, index) => (
               <View key={index} style={styles.languageChip}>
                 <Text style={styles.languageText}>{lang}</Text>
               </View>
@@ -119,7 +110,7 @@ export default function DoctorProfileScreen() {
               </View>
             </View>
             <Text style={styles.reviewText}>
-              "الدكتورة سارة مستمعة جيدة وتضع خطط علاجية واضحة، شعرت بفرق كبير بعد ثالث جلسة."
+              "تجربتي مع {doctor.name} كانت ممتازة، استماع جيد وخطط علاجية واضحة، شعرت بفرق كبير بعد ثالث جلسة."
             </Text>
           </View>
         </View>
@@ -129,7 +120,7 @@ export default function DoctorProfileScreen() {
       <View style={styles.bottomBar}>
         <View style={styles.priceContainer}>
           <Text style={styles.priceLabel}>سعر الجلسة</Text>
-          <Text style={styles.priceText}>{DOCTOR_DETAILS.price} ج.م</Text>
+          <Text style={styles.priceText}>{doctor.price} ج.م</Text>
         </View>
         <Button
           title="احجز جلسة"
