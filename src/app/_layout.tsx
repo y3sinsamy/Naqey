@@ -1,8 +1,8 @@
 import { useFonts } from 'expo-font';
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider as ExpoThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider as ExpoThemeProvider, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme, View } from 'react-native';
+import { View } from 'react-native';
 import 'react-native-reanimated';
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
@@ -49,8 +49,29 @@ export default function RootLayout() {
 
 function AppContent() {
   const { theme, colors } = useThemeContext();
+
+  const navTheme = theme === 'dark' ? {
+    ...DarkTheme,
+    colors: {
+      ...DarkTheme.colors,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.onSurface,
+      border: colors.outlineVariant,
+    }
+  } : {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.onSurface,
+      border: colors.outlineVariant,
+    }
+  };
+
   return (
-    <ExpoThemeProvider value={theme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ExpoThemeProvider value={navTheme}>
       <View style={{ flex: 1, backgroundColor: colors.surfaceContainerHighest }}>
         <View style={{ flex: 1, width: '100%', maxWidth: 440, alignSelf: 'center', backgroundColor: colors.background, overflow: 'hidden', shadowColor: '#000', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0.1, shadowRadius: 20, elevation: 5 }}>
           <Stack screenOptions={{ headerShown: false }}>

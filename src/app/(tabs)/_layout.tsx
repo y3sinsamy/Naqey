@@ -14,8 +14,9 @@ export default function TabLayout() {
         headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopWidth: 0,
+          backgroundColor: colors.surfaceContainerHigh,
+          borderTopWidth: 1,
+          borderTopColor: colors.outlineVariant,
           borderTopLeftRadius: 12,
           borderTopRightRadius: 12,
           elevation: 8,

@@ -4,6 +4,7 @@ export const Colors = {
   light: {
     text: '#111c2d', // on-surface
     background: '#f9f9ff', // background
+    onBackground: '#111c2d',
     primary: '#006b5f',
     onPrimary: '#ffffff',
     primaryContainer: '#14b8a6',
@@ -39,6 +40,7 @@ export const Colors = {
     // Basic dark theme mapping (can be refined later)
     text: '#ffffff',
     background: '#111c2d',
+    onBackground: '#e1e3df',
     primary: '#4fdbc8',
     onPrimary: '#003730',
     primaryContainer: '#005048',
