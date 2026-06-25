@@ -5,21 +5,24 @@ import { useRouter } from 'expo-router';
 import { Colors, Spacing, Fonts } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
 import { Button } from '@/components/ui/Button';
+import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
+import { TouchableOpacity } from 'react-native';
 
-export default function LoginScreen() {
+export default function SignupScreen() {
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
 
   const router = useRouter();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = () => {
+  const handleSignup = () => {
     setLoading(true);
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
-      router.replace('/(tabs)' as any);
+      router.replace({ pathname: '/onboarding/wizard', params: { name } });
     }, 1000);
   };
 
@@ -31,11 +34,23 @@ export default function LoginScreen() {
       >
         <View style={styles.content}>
           <View style={styles.header}>
-            <Text style={styles.title}>تسجيل الدخول</Text>
-            <Text style={styles.subtitle}>أهلاً بك مجدداً في نقي</Text>
+            <Text style={styles.title}>إنشاء حساب جديد</Text>
+            <Text style={styles.subtitle}>انضم إلى مساحتك الآمنة في نقي</Text>
           </View>
 
           <View style={styles.form}>
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>الاسم</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="الاسم الكريم"
+                placeholderTextColor={colors.outline}
+                value={name}
+                onChangeText={setName}
+                textAlign="right"
+              />
+            </View>
+
             <View style={styles.inputContainer}>
               <Text style={styles.label}>البريد الإلكتروني</Text>
               <TextInput
@@ -51,20 +66,20 @@ export default function LoginScreen() {
             </View>
 
             <Button 
-              title="دخول" 
+              title="إنشاء حساب" 
               size="large" 
               loading={loading}
-              onPress={handleLogin}
+              onPress={handleSignup}
               style={styles.submitButton}
             />
           </View>
 
           <View style={styles.footer}>
-            <Text style={styles.footerText}>ليس لديك حساب؟ </Text>
+            <Text style={styles.footerText}>لديك حساب بالفعل؟ </Text>
             <Button 
-              title="سجل الآن" 
+              title="تسجيل الدخول" 
               variant="text" 
-              onPress={() => router.push('/signup')} 
+              onPress={() => router.replace('/login')} 
               textStyle={{ fontSize: 14 }}
             />
           </View>
@@ -102,45 +117,44 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    fontFamily: Fonts.regular,
-    color: colors.textSecondary,
+    fontFamily: Fonts.medium,
+    color: colors.onSurfaceVariant,
   },
   form: {
-    width: '100%',
+    gap: Spacing.three,
   },
   inputContainer: {
-    marginBottom: Spacing.four,
+    gap: Spacing.one,
   },
   label: {
     fontSize: 14,
-    fontFamily: Fonts.medium,
+    fontFamily: Fonts.semiBold,
     color: colors.onSurface,
-    marginBottom: Spacing.two,
     textAlign: 'right',
   },
   input: {
+    height: 56,
     backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.outlineVariant,
-    borderRadius: 12,
-    paddingHorizontal: Spacing.three,
-    paddingVertical: 14,
+    borderRadius: 16,
+    paddingHorizontal: Spacing.four,
     fontSize: 16,
     fontFamily: Fonts.regular,
-    color: colors.text,
+    color: colors.onSurface,
+    borderWidth: 1,
+    borderColor: colors.surfaceContainerHighest,
   },
   submitButton: {
     marginTop: Spacing.two,
   },
   footer: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: Spacing.five,
+    marginTop: Spacing.six,
   },
   footerText: {
-    color: colors.textSecondary,
-    fontFamily: Fonts.regular,
     fontSize: 14,
+    fontFamily: Fonts.regular,
+    color: colors.onSurfaceVariant,
   },
 });

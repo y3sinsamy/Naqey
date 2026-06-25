@@ -4,12 +4,17 @@ import { useThemeContext } from '@/hooks/use-theme';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
-export default function CategorySelectionStep() {
+interface CategorySelectionStepProps {
+  initialName?: string;
+}
+
+export default function CategorySelectionStep({ initialName }: CategorySelectionStepProps) {
   const { colors } = useThemeContext();
   const styles = React.useMemo(() => createStyles(colors), [colors]);
 
   const [selectedGender, setSelectedGender] = useState<'male' | 'female' | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [name, setName] = useState(initialName || '');
 
   const categories = [
     { id: 'porn', icon: 'visibility_off', title: 'إدمان الإباحية' },
@@ -42,7 +47,13 @@ export default function CategorySelectionStep() {
         <View style={styles.formRow}>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>الاسم أو اللقب</Text>
-            <TextInput style={styles.input} placeholder="مثال: نقـي" placeholderTextColor={colors.outlineVariant} />
+            <TextInput 
+              style={styles.input} 
+              placeholder="مثال: نقـي" 
+              placeholderTextColor={colors.outlineVariant} 
+              value={name}
+              onChangeText={setName}
+            />
           </View>
           <View style={styles.inputGroup}>
             <Text style={styles.label}>العمر</Text>

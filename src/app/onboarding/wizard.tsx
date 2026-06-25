@@ -1,6 +1,6 @@
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import React, { useState } from 'react';
 import { Dimensions, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -16,12 +16,13 @@ export default function OnboardingWizard() {
   const styles = React.useMemo(() => createStyles(colors), [colors]);
 
   const router = useRouter();
+  const { name } = useLocalSearchParams();
   const [currentStep, setCurrentStep] = useState(0);
 
   const steps = [
     { component: <HowItWorksStep /> },
     { component: <PrivacyAssuranceStep /> },
-    { component: <CategorySelectionStep /> },
+    { component: <CategorySelectionStep initialName={name as string} /> },
   ];
 
   const handleNext = () => {

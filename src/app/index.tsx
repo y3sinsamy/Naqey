@@ -56,7 +56,7 @@ export default function WelcomeScreen() {
         <View style={styles.actionSection}>
           <Pressable
             style={({ pressed }) => [styles.primaryButton, pressed && styles.buttonPressed]}
-            onPress={() => router.push('/onboarding/wizard')}
+            onPress={() => router.push('/signup')}
           >
             <Text style={styles.primaryButtonText}>ابدأ الآن</Text>
           </Pressable>

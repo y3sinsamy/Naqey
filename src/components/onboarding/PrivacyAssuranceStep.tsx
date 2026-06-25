@@ -112,7 +112,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     marginBottom: Spacing.four,
   },
   privacyCard: {
-    width: (width - Spacing.four * 2 - Spacing.two) / 2, // 2 columns
+    width: '48%', // Forces a perfect 2x2 grid
     backgroundColor: colors.surfaceContainerLowest,
     padding: Spacing.three,
     borderRadius: 20,
