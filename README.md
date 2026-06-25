@@ -1,56 +1,117 @@
-# Welcome to your Expo app 👋
+<div align="center">
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+  # Naqey (نقي)
+  
+  **Your Companion to Recovery compulsive behavior addiction**
 
-## Get started
+  Naqey is a comprehensive addiction and compulsive behavior recovery mobile application built with React Native and Expo. It bridges the gap between individuals seeking help and specialized therapists, while providing a suite of daily interactive tools to assist in the recovery journey.
 
-1. Install dependencies
+  [Features](#features) •
+  [Tech Stack](#tech-stack) •
+  [Installation](#installation) •
+  [App Structure](#app-structure)
+</div>
 
+<br/>
+
+## ✨ Features
+
+- **🧑‍⚕️ Telehealth & Consultations**
+  - Book and manage appointments with certified therapists.
+  - In-app high-quality **Video & Audio Calls**.
+  - Advanced **Call Room** with Picture-in-Picture (PiP) for doctor feeds and interactive controls.
+  - **Session Replay:** Watch recorded sessions securely with timeline scrubbing and native full-screen support.
+
+- **🧘 Recovery & Self-Care Tools**
+  - **Breathing Exercises:** Interactive animations to help users manage anxiety and cravings in real-time.
+  - **Journaling & Braindump:** A safe space to write down thoughts, track moods, and reflect on the recovery process.
+  - **Educational Resources:** A rich library of articles and guides related to mental health and addiction.
+
+- **🎨 Designed for the Arab User**
+  - First-class **Right-to-Left (RTL)** layout and typography.
+  - A calming, modern UI tailored to reduce cognitive load and provide a safe psychological environment.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [React Native](https://reactnative.dev/) & [Expo](https://expo.dev/) (SDK 52+)
+- **Routing:** [Expo Router](https://docs.expo.dev/router/introduction/) (File-based routing)
+- **Video/Media:** `expo-video` for native, hardware-accelerated video rendering (SurfaceView & TextureView).
+- **Animations:** [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) for fluid, 60fps micro-animations.
+- **Styling:** Custom dynamic theming system (`use-theme`) ensuring a premium, polished look.
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Node.js (v18+)
+- Expo CLI
+- Expo Go app on your physical device, or an Android/iOS emulator.
+
+### Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/naqey/naqey-app.git
+   cd naqey-app
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+3. **Start the development server**
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+4. **Run on device**
+   - Open the **Expo Go** app on your phone and scan the QR code from the terminal.
+   - Or press `a` in the terminal to launch the Android emulator.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 📂 App Structure
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+├── app/                      # Expo Router Pages & Navigation
+│   ├── (tabs)/               # Bottom Tab Screens (Home, Recovery, Doctors, Articles, Profile)
+│   ├── _layout.tsx           # Global Root Layout & Providers
+│   ├── index.tsx             # Entry point / Splash Handler
+│   ├── login.tsx             # Authentication Screen
+│   ├── onboarding/           # Multi-step Onboarding Flow
+│   ├── call/                 # Telehealth features
+│   │   ├── preview/[id].tsx  # Call preparation & device check
+│   │   └── room/[id].tsx     # Main PiP Video Call Room
+│   ├── booking/              # Doctor booking & payment flow
+│   ├── chat/                 # Text messaging with therapists
+│   ├── profile/              # User settings and profile management
+│   │   └── appointments/     # Session history & Video Replays (replay.tsx)
+│   └── recovery/             # Interactive mental health tools
+│       ├── exercises/        # Breathing & relaxation animations
+│       └── journal/          # Cognitive Braindump & mood tracking
+├── components/               # Reusable UI & Components
+│   ├── ui/                   # Primitive UI (Buttons, Cards, Inputs)
+│   ├── onboarding/           # Specialized components for onboarding
+│   └── themed-*.tsx          # Custom themed core components
+├── constants/                # App-wide constants
+│   ├── theme.ts              # Colors, Spacing, Typography & Tokens
+│   └── Colors.ts             # Legacy / Fallback color definitions
+├── data/                     # Mock data & Static JSON files (Doctors, Articles)
+├── hooks/                    # Custom React Hooks
+│   ├── use-theme.tsx         # Dynamic Theme Context Provider
+│   └── useColorScheme.ts     # System dark/light mode hook
+├── store/                    # State management (Zustand/Context)
+└── assets/                   # Static media files
+    ├── fonts/                # Custom Arabic typography (e.g., SpaceMono)
+    ├── images/               # Logos, splash screens, icons
+    └── videos/               # Local mock videos (patient.mp4, doctor.mp4)
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🔒 Privacy & Security
 
-### Other setup steps
+Naqey handles sensitive mental health data. All session recordings and journal entries are designed to be securely handled and comply with standard telehealth privacy guidelines.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+---
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<div align="center">
+  <i>Made with ❤️ for a better, healthier tomorrow.</i>
+</div>
