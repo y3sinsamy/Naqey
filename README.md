@@ -6,10 +6,10 @@
 
   Naqey is a comprehensive addiction and compulsive behavior recovery mobile application built with React Native and Expo. It bridges the gap between individuals seeking help and specialized therapists, while providing a suite of daily interactive tools to assist in the recovery journey.
 
-  [Features](#features) •
-  [Tech Stack](#tech-stack) •
-  [Installation](#installation) •
-  [App Structure](#app-structure)
+  [Features](#-features) •
+  [Tech Stack](#%EF%B8%8F-tech-stack) •
+  [Installation](#-installation--setup) •
+  [App Structure](#-app-structure)
 </div>
 
 <br/>
