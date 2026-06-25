@@ -5,8 +5,8 @@ import React from 'react';
 import { ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
 
 import { Card } from '@/components/ui/Card';
+import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { useThemeContext } from '@/hooks/use-theme';
-import { Image } from 'expo-image';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -31,9 +31,14 @@ export default function ProfileScreen() {
           borderRadius: 52,
           borderWidth: 2,
           borderColor: colors.primary,
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: Spacing.three
         }]}>
-          <Image source="https://i.pravatar.cc/150?img=11" style={{ width: 96, height: 96, borderRadius: 48 }} />
+          <View style={{ width: 96, height: 96, borderRadius: 48, backgroundColor: colors.surfaceVariant, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialSymbol name="person" size={48} color={colors.primary} />
+          </View>
         </View>
         <Text style={styles.name}>أحمد محمد</Text>
         <Text style={styles.email}>ahmed@example.com</Text>

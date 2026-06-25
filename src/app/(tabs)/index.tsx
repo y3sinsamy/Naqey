@@ -31,10 +31,9 @@ export default function DashboardScreen() {
           style={[styles.iconButton, { borderWidth: 2, borderColor: colors.primary }]}
           onPress={() => router.push('/profile')}
         >
-          <Image
-            source="https://i.pravatar.cc/150?img=11"
-            style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant }}
-          />
+          <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: colors.surfaceVariant, alignItems: 'center', justifyContent: 'center' }}>
+            <MaterialSymbol name="person" size={24} color={colors.primary} />
+          </View>
         </TouchableOpacity>
         <Image source={require('@/assets/NaqeyLogo.png')} style={{ width: 32 * 1080 / 407, height: 32 }} />
         <TouchableOpacity style={styles.iconButton}>
