@@ -1,16 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TextInput, TouchableOpacity, FlatList, KeyboardAvoidingView, Platform, I18nManager } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Image } from 'expo-image';
-import { useThemeContext } from '@/hooks/use-theme';
-import { Colors, Fonts, Spacing } from '@/constants/theme';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
+import { Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
+import { Image } from 'expo-image';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useRef, useState } from 'react';
+import { FlatList, I18nManager, KeyboardAvoidingView, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 // Mock doctor info
 const DOCTOR_DATA = {
-  name: 'د. أحمد علي',
-  specialty: 'استشاري علاج الإدمان',
-  avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+  name: 'د. أحمد محمود',
+  specialty: 'طب نفسي',
+  avatar: 'https://images.unsplash.com/photo-1686063165043-45243dab25ab?q=80&w=464&auto=format&fit=crop',
   isOnline: true,
 };
 
@@ -41,7 +41,7 @@ export default function DoctorChatScreen() {
     };
     setMessages((prev) => [...prev, newMessage]);
     setInputText('');
-    
+
     setTimeout(() => {
       const replyMessage = {
         id: (Date.now() + 1).toString(),
@@ -69,7 +69,7 @@ export default function DoctorChatScreen() {
               <Text style={styles.sessionCardTitle}>{item.title}</Text>
             </View>
             <Text style={styles.sessionCardDate}>{item.date}</Text>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.sessionCardButton}
               onPress={() => router.push(`/call/preview/${id}`)}
               activeOpacity={0.7}
@@ -100,8 +100,8 @@ export default function DoctorChatScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <KeyboardAvoidingView 
-        style={styles.container} 
+      <KeyboardAvoidingView
+        style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         {/* Header */}
@@ -109,7 +109,7 @@ export default function DoctorChatScreen() {
           <TouchableOpacity onPress={() => router.back()} style={styles.iconButton}>
             <MaterialSymbol name="arrow_forward_ios" size={24} color={colors.onSurface} />
           </TouchableOpacity>
-          
+
           <View style={styles.headerProfile}>
             <View style={styles.avatarContainer}>
               <Image source={DOCTOR_DATA.avatar} style={styles.headerAvatar} />
@@ -135,9 +135,9 @@ export default function DoctorChatScreen() {
           contentContainerStyle={styles.messagesContainer}
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={
-             <View style={styles.dateHeaderContainer}>
-                <Text style={styles.dateHeaderText}>اليوم</Text>
-             </View>
+            <View style={styles.dateHeaderContainer}>
+              <Text style={styles.dateHeaderText}>اليوم</Text>
+            </View>
           }
         />
 
@@ -155,8 +155,8 @@ export default function DoctorChatScreen() {
             multiline
             textAlign="right"
           />
-          <TouchableOpacity 
-            style={[styles.sendButton, inputText.trim() ? styles.sendButtonActive : styles.sendButtonInactive]} 
+          <TouchableOpacity
+            style={[styles.sendButton, inputText.trim() ? styles.sendButtonActive : styles.sendButtonInactive]}
             onPress={sendMessage}
             disabled={!inputText.trim()}
           >
@@ -180,8 +180,8 @@ const createStyles = (colors: any) => StyleSheet.create({
     flexDirection: 'row-reverse',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: Spacing.four,
-    paddingVertical: Spacing.three,
+    padding: Spacing.four,
+    paddingBottom: Spacing.three,
     backgroundColor: colors.surface,
     borderBottomWidth: 1,
     borderBottomColor: colors.surfaceVariant,

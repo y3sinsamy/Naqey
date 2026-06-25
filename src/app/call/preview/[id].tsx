@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Image } from 'expo-image';
-import { useThemeContext } from '@/hooks/use-theme';
-import { Fonts, Spacing } from '@/constants/theme';
-import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
 import { Button } from '@/components/ui/Button';
+import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
+import { Fonts, Spacing } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import React, { useState } from 'react';
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,6 +17,12 @@ export default function CallPreviewScreen() {
 
   const [isMuted, setIsMuted] = useState(false);
   const [isVideoOff, setIsVideoOff] = useState(false);
+
+  const previewPlayer = useVideoPlayer(require('@/assets/videos/patient.mp4'), player => {
+    player.loop = true;
+    player.muted = true; // required for web autoplay
+    player.play();
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -30,7 +36,7 @@ export default function CallPreviewScreen() {
 
       <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-          <Text style={styles.title}>د. أحمد علي</Text>
+          <Text style={styles.title}>د. أحمد محمود</Text>
           <Text style={styles.subtitle}>موعد الجلسة: 10:30 صباحاً</Text>
 
           <View style={styles.previewContainer}>
@@ -42,24 +48,26 @@ export default function CallPreviewScreen() {
                 <Text style={styles.videoOffText}>الكاميرا مغلقة</Text>
               </View>
             ) : (
-              <Image 
-                source="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=80" 
+              <VideoView
+                player={previewPlayer}
                 style={styles.previewVideo}
                 contentFit="cover"
+                nativeControls={false}
+                playsInline={true}
               />
             )}
-            
+
             <View style={styles.controlsOverlay}>
-              <TouchableOpacity 
-                style={[styles.controlButton, isMuted && styles.controlButtonActive]} 
+              <TouchableOpacity
+                style={[styles.controlButton, isMuted && styles.controlButtonActive]}
                 onPress={() => setIsMuted(!isMuted)}
                 activeOpacity={0.7}
               >
                 <MaterialSymbol name={isMuted ? "mic_off" : "mic"} size={28} color={isMuted ? colors.error : colors.onSurface} />
               </TouchableOpacity>
-              
-              <TouchableOpacity 
-                style={[styles.controlButton, isVideoOff && styles.controlButtonActive]} 
+
+              <TouchableOpacity
+                style={[styles.controlButton, isVideoOff && styles.controlButtonActive]}
                 onPress={() => setIsVideoOff(!isVideoOff)}
                 activeOpacity={0.7}
               >
@@ -73,8 +81,8 @@ export default function CallPreviewScreen() {
             <Text style={styles.infoText}>سيتم إشعار الطبيب بانضمامك لغرفة الانتظار. يرجى التأكد من جودة اتصالك وإعدادات الكاميرا والصوت.</Text>
           </View>
 
-          <Button 
-            title="الانضمام للجلسة" 
+          <Button
+            title="الانضمام للجلسة"
             onPress={() => router.push(`/call/room/${id}`)}
             style={styles.joinButton}
             textStyle={{ fontSize: 18 }}

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Dimensions, Animated } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Image } from 'expo-image';
-import { useThemeContext } from '@/hooks/use-theme';
-import { Fonts, Spacing } from '@/constants/theme';
 import { MaterialSymbol } from '@/components/ui/MaterialSymbol';
+import { Fonts } from '@/constants/theme';
+import { useThemeContext } from '@/hooks/use-theme';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useVideoPlayer, VideoView } from 'expo-video';
+import { useEffect, useState } from 'react';
+import { Dimensions, Pressable, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,9 +18,21 @@ export default function CallRoomScreen() {
   const [isSpeaker, setIsSpeaker] = useState(true);
   const [duration, setDuration] = useState(0);
 
+  const remotePlayer = useVideoPlayer(require('@/assets/videos/doctor.mp4'), player => {
+    player.loop = true;
+    player.muted = true; // required for web autoplay
+    player.play();
+  });
+
+  const localPlayer = useVideoPlayer(require('@/assets/videos/patient.mp4'), player => {
+    player.loop = true;
+    player.muted = true; // required for web autoplay
+    player.play();
+  });
+
   // Auto-hide controls after 3 seconds
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     if (controlsVisible) {
       timeout = setTimeout(() => {
         setControlsVisible(false);
@@ -54,91 +66,105 @@ export default function CallRoomScreen() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity activeOpacity={1} style={styles.container} onPress={toggleControls}>
-        {/* Remote Video Placeholder (Doctor) */}
-        <Image 
-          source="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=800&q=80" 
-          style={StyleSheet.absoluteFillObject}
-          contentFit="cover"
-        />
+      {/* Remote Video Placeholder (Doctor) */}
+      <VideoView
+        player={remotePlayer}
+        style={styles.absoluteFill}
+        contentFit="cover"
+        nativeControls={false}
+        playsInline={true}
+        surfaceType="textureView"
+      />
 
-        {/* Local Video PiP (Patient) */}
-        <View style={styles.localVideoContainer}>
-          {isVideoOff ? (
-            <View style={styles.videoOffPlaceholder}>
-               <MaterialSymbol name="person_off" size={40} color="#fff" />
-            </View>
-          ) : (
-            <Image 
-              source="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80" 
-              style={styles.localVideo}
-              contentFit="cover"
-            />
-          )}
-        </View>
+      {/* Transparent overlay to capture taps for toggling controls */}
+      <Pressable style={styles.absoluteFill} onPress={toggleControls} />
 
-        {/* Header Information */}
-        {controlsVisible && (
-          <SafeAreaView style={styles.headerSafeArea}>
-            <View style={styles.header}>
-              <TouchableOpacity style={styles.headerButton} onPress={() => router.back()}>
-                <MaterialSymbol name="fullscreen_exit" size={24} color="#fff" />
-              </TouchableOpacity>
-              
-              <View style={styles.callInfo}>
-                <Text style={styles.doctorName}>د. أحمد علي</Text>
-                <View style={styles.statusRow}>
-                  <Text style={styles.duration}>{formatDuration(duration)}</Text>
-                  <MaterialSymbol name="lock" size={12} color="#4ade80" />
-                  <MaterialSymbol name="signal_cellular_alt" size={14} color="#4ade80" />
-                </View>
+      {/* Local Video PiP (Patient) */}
+      <View style={styles.localVideoContainer} pointerEvents="none">
+        {isVideoOff ? (
+          <View style={styles.videoOffPlaceholder}>
+            <MaterialSymbol name="person_off" size={40} color="#fff" />
+          </View>
+        ) : (
+          <VideoView
+            player={localPlayer}
+            style={styles.localVideo}
+            contentFit="cover"
+            nativeControls={false}
+            playsInline={true}
+            surfaceType="textureView"
+          />
+        )}
+      </View>
+
+      {/* Header Information */}
+      {controlsVisible && (
+        <SafeAreaView style={styles.headerSafeArea}>
+          <View style={styles.header}>
+            <TouchableOpacity style={styles.headerButton} onPress={() => router.back()}>
+              <MaterialSymbol name="fullscreen_exit" size={24} color="#fff" />
+            </TouchableOpacity>
+
+            <View style={styles.callInfo}>
+              <Text style={styles.doctorName}>د. أحمد محمود</Text>
+              <View style={styles.statusRow}>
+                <Text style={styles.duration}>{formatDuration(duration)}</Text>
+                <MaterialSymbol name="lock" size={12} color="#4ade80" />
+                <MaterialSymbol name="signal_cellular_alt" size={14} color="#4ade80" />
               </View>
-
-              <View style={{ width: 44 }} />
             </View>
-          </SafeAreaView>
-        )}
 
-        {/* Controls Overlay */}
-        {controlsVisible && (
-          <SafeAreaView style={styles.controlsSafeArea}>
-            <View style={styles.controlsBar}>
-              <TouchableOpacity 
-                style={[styles.controlButton, isSpeaker ? styles.controlButtonActive : styles.controlButtonInactive]}
-                onPress={() => setIsSpeaker(!isSpeaker)}
-              >
-                <MaterialSymbol name={isSpeaker ? "volume_up" : "volume_off"} size={24} color={isSpeaker ? colors.primary : "#fff"} />
-              </TouchableOpacity>
+            <View style={{ width: 44 }} />
+          </View>
+        </SafeAreaView>
+      )}
 
-              <TouchableOpacity 
-                style={[styles.controlButton, isVideoOff ? styles.controlButtonActive : styles.controlButtonInactive]}
-                onPress={() => setIsVideoOff(!isVideoOff)}
-              >
-                <MaterialSymbol name={isVideoOff ? "videocam_off" : "videocam"} size={24} color={isVideoOff ? colors.primary : "#fff"} />
-              </TouchableOpacity>
+      {/* Controls Overlay */}
+      {controlsVisible && (
+        <SafeAreaView style={styles.controlsSafeArea}>
+          <View style={styles.controlsBar}>
+            <TouchableOpacity
+              style={[styles.controlButton, isSpeaker ? styles.controlButtonActive : styles.controlButtonInactive]}
+              onPress={() => setIsSpeaker(!isSpeaker)}
+            >
+              <MaterialSymbol name={isSpeaker ? "volume_up" : "volume_off"} size={24} color={isSpeaker ? colors.primary : "#fff"} />
+            </TouchableOpacity>
 
-              <TouchableOpacity 
-                style={[styles.controlButton, isMuted ? styles.controlButtonActive : styles.controlButtonInactive]}
-                onPress={() => setIsMuted(!isMuted)}
-              >
-                <MaterialSymbol name={isMuted ? "mic_off" : "mic"} size={24} color={isMuted ? colors.primary : "#fff"} />
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.controlButton, isVideoOff ? styles.controlButtonActive : styles.controlButtonInactive]}
+              onPress={() => setIsVideoOff(!isVideoOff)}
+            >
+              <MaterialSymbol name={isVideoOff ? "videocam_off" : "videocam"} size={24} color={isVideoOff ? colors.primary : "#fff"} />
+            </TouchableOpacity>
 
-              <TouchableOpacity 
-                style={[styles.controlButton, styles.endCallButton]}
-                onPress={endCall}
-              >
-                <MaterialSymbol name="call_end" size={28} color="#fff" />
-              </TouchableOpacity>
-            </View>
-          </SafeAreaView>
-        )}
-      </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.controlButton, isMuted ? styles.controlButtonActive : styles.controlButtonInactive]}
+              onPress={() => setIsMuted(!isMuted)}
+            >
+              <MaterialSymbol name={isMuted ? "mic_off" : "mic"} size={24} color={isMuted ? colors.primary : "#fff"} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.controlButton, styles.endCallButton]}
+              onPress={endCall}
+            >
+              <MaterialSymbol name="call_end" size={28} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  absoluteFill: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
   container: {
     flex: 1,
     backgroundColor: '#000',

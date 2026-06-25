@@ -16,8 +16,8 @@ const SESSION_INFO = {
   specialty: 'طب نفسي',
   date: '2023-10-10',
   duration: '45 دقيقة',
-  videoUrl: 'https://www.pexels.com/download/video/7261920/',
-  doctorVideoUrl: 'https://www.pexels.com/download/video/8375621/', // Mock doctor feed
+  videoUrl: 'local_patient', // We'll use local assets directly in the hook
+  doctorVideoUrl: 'local_doctor', 
 };
 
 const formatTime = (seconds: number) => {
@@ -35,7 +35,7 @@ export default function ReplayScreen() {
 
   const [playing, setPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const hideControlsTimer = useRef<NodeJS.Timeout | null>(null);
+  const hideControlsTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Video State
   const [elapsed, setElapsed] = useState(0);
@@ -43,14 +43,14 @@ export default function ReplayScreen() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [timelineWidth, setTimelineWidth] = useState(0);
 
-  // Setup expo-video player
-  const player = useVideoPlayer(SESSION_INFO.videoUrl, player => {
+  // Setup expo-video player with local assets to avoid buffering desync
+  const player = useVideoPlayer(require('@/assets/videos/patient.mp4'), player => {
     player.loop = false;
   });
 
-  const doctorPlayer = useVideoPlayer(SESSION_INFO.doctorVideoUrl, player => {
+  const doctorPlayer = useVideoPlayer(require('@/assets/videos/doctor.mp4'), player => {
     player.loop = false;
-    player.muted = true; // Mute doctor by default to avoid echo, or main
+    player.muted = true; // Mute doctor by default to avoid echo
   });
 
   // Poll for current time and duration
@@ -134,12 +134,13 @@ export default function ReplayScreen() {
           style={[styles.videoContainer, isFullScreen && styles.videoContainerFullScreen]}
           onPress={resetControlsTimeout}
         >
-          <View style={isFullScreen ? styles.fullScreenVideoWrapper : styles.normalVideoWrapper}>
+          <View style={isFullScreen ? styles.fullScreenVideoWrapper : { width: '100%', height: videoHeight }}>
             <VideoView
               player={player}
-              style={{ width: videoWidth, height: videoHeight }}
+              style={{ width: '100%', height: '100%' }}
               nativeControls={false}
               contentFit="contain"
+              surfaceType="textureView"
             />
           </View>
 
@@ -150,6 +151,7 @@ export default function ReplayScreen() {
               style={isFullScreen ? styles.pipVideoFullScreen : styles.pipVideo}
               nativeControls={false}
               contentFit="cover"
+              surfaceType="textureView"
             />
           </View>
 
@@ -160,13 +162,6 @@ export default function ReplayScreen() {
                 <View style={styles.liveBadge}>
                   <Text style={styles.liveText}>مسجلة</Text>
                 </View>
-                <TouchableOpacity onPress={toggleFullScreen} style={styles.fullscreenButton}>
-                  <MaterialIcons
-                    name={isFullScreen ? "fullscreen-exit" : "fullscreen"}
-                    size={28}
-                    color="#FFF"
-                  />
-                </TouchableOpacity>
               </View>
 
               <TouchableOpacity style={styles.playPauseButton} onPress={togglePlay}>
@@ -179,8 +174,14 @@ export default function ReplayScreen() {
 
               <View style={styles.controlsFooter}>
                 <View style={styles.timeRow}>
-                  <Text style={styles.timeText}>{formatTime(elapsed)}</Text>
-                  <Text style={styles.timeText}>{formatTime(duration)}</Text>
+                  <Text style={styles.timeText}>{formatTime(elapsed)} / {formatTime(duration)}</Text>
+                  <TouchableOpacity onPress={toggleFullScreen} style={styles.fullscreenButton}>
+                    <MaterialIcons
+                      name={isFullScreen ? "fullscreen-exit" : "fullscreen"}
+                      size={28}
+                      color="#FFF"
+                    />
+                  </TouchableOpacity>
                 </View>
                 {/* Real-time Timeline Bar */}
                 <Pressable
@@ -236,7 +237,7 @@ export default function ReplayScreen() {
                 <MaterialIcons name="calendar-today" size={20} color={colors.primary} />
                 <Text style={styles.label}>التاريخ:</Text>
               </View>
-              <Text style={styles.value} style={{ direction: 'ltr' }}>{SESSION_INFO.date}</Text>
+              <Text style={[styles.value, { direction: 'ltr' }]}>{SESSION_INFO.date}</Text>
             </View>
             <View style={styles.row}>
               <View style={styles.iconTextRow}>
@@ -282,7 +283,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   contentFullScreen: {
     padding: 0,
-    flex: 1,
+    flexGrow: 1,
   },
   videoContainer: {
     width: '100%',
@@ -298,9 +299,10 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   videoContainerFullScreen: {
     borderRadius: 0,
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#000',
   },
   normalVideoWrapper: {
     width: '100%',
@@ -353,7 +355,11 @@ const createStyles = (colors: any) => StyleSheet.create({
     height: '100%',
   },
   controlsOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: 'rgba(0,0,0,0.4)',
     justifyContent: 'space-between',
     padding: Spacing.four,
@@ -391,12 +397,13 @@ const createStyles = (colors: any) => StyleSheet.create({
   timeRow: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 8,
   },
   timeText: {
     fontFamily: Fonts.medium,
     color: '#FFF',
-    fontSize: 12,
+    fontSize: 14,
   },
   timelineContainer: {
     height: 20,

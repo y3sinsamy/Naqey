@@ -1,18 +1,18 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { useRouter } from 'expo-router';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { Fonts, Spacing } from '@/constants/theme';
 import { useThemeContext } from '@/hooks/use-theme';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 
 const MOCK_APPOINTMENTS = [
   {
     id: '1',
-    doctorName: 'د. سارة خالد',
+    doctorName: 'د. أحمد محمود',
     specialty: 'علاج سلوكي معرفي',
     date: '2023-10-15',
     time: '4:30 م',
@@ -71,9 +71,9 @@ export default function MyAppointmentsScreen() {
           </Text>
         </View>
       </View>
-      
+
       <View style={styles.divider} />
-      
+
       <View style={styles.cardDetails}>
         <View style={styles.detailRow}>
           <MaterialIcons name="calendar-today" size={16} color={colors.primary} />
@@ -88,9 +88,9 @@ export default function MyAppointmentsScreen() {
           <Text style={styles.detailText}>استشارة مرئية</Text>
         </View>
       </View>
-      
+
       {item.status === 'upcoming' ? (
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.actionButton}
           onPress={() => router.push(`/call/preview/${item.id}`)}
           activeOpacity={0.7}
@@ -99,13 +99,13 @@ export default function MyAppointmentsScreen() {
         </TouchableOpacity>
       ) : item.status === 'completed' ? (
         <View style={styles.completedActions}>
-          <Button 
-            title="إعادة المشاهدة" 
+          <Button
+            title="إعادة المشاهدة"
             style={styles.replayButton}
             onPress={() => router.push(`/profile/appointments/${item.id}/replay`)}
           />
-          <Button 
-            title="ملاحظات الطبيب" 
+          <Button
+            title="ملاحظات الطبيب"
             variant="outline"
             style={styles.notesButton}
             onPress={() => router.push(`/profile/appointments/${item.id}/notes`)}
@@ -122,11 +122,11 @@ export default function MyAppointmentsScreen() {
           <MaterialIcons name="chevron-right" size={28} color={colors.onSurface} />
         </TouchableOpacity>
         <Text style={styles.appBarTitle}>مواعيدي</Text>
-        <View style={{ width: 36 }} /> 
+        <View style={{ width: 36 }} />
       </View>
 
       <View style={styles.tabsContainer}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.tab, activeTab === 'upcoming' && styles.activeTab]}
           onPress={() => setActiveTab('upcoming')}
         >
@@ -134,7 +134,7 @@ export default function MyAppointmentsScreen() {
             القادمة
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.tab, activeTab === 'past' && styles.activeTab]}
           onPress={() => setActiveTab('past')}
         >

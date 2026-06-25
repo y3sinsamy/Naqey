@@ -23,9 +23,9 @@ const CHATS = [
   },
   {
     id: '1',
-    name: 'د. سارة خالد',
+    name: 'د. أحمد محمود',
     specialty: 'استشاري علاج الإدمان',
-    avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+    avatar: 'https://images.unsplash.com/photo-1686063165043-45243dab25ab?q=80&w=464&auto=format&fit=crop',
     isBot: false,
     lastMessage: 'دعنا نناقش ذلك في الجلسة القادمة.',
     time: 'أمس',
