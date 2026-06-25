@@ -21,14 +21,21 @@ export default function CallRoomScreen() {
   const remotePlayer = useVideoPlayer(require('@/assets/videos/doctor.mp4'), player => {
     player.loop = true;
     player.muted = true; // required for web autoplay
-    player.play();
   });
 
   const localPlayer = useVideoPlayer(require('@/assets/videos/patient.mp4'), player => {
     player.loop = true;
     player.muted = true; // required for web autoplay
-    player.play();
   });
+
+  // Call play() after mount so the web DOM has rendered the VideoView
+  // We depend on isVideoOff so that when the camera is re-enabled and the local VideoView remounts, we trigger play again.
+  useEffect(() => {
+    remotePlayer.play();
+    if (!isVideoOff) {
+      localPlayer.play();
+    }
+  }, [remotePlayer, localPlayer, isVideoOff]);
 
   // Auto-hide controls after 3 seconds
   useEffect(() => {
@@ -69,11 +76,10 @@ export default function CallRoomScreen() {
       {/* Remote Video Placeholder (Doctor) */}
       <VideoView
         player={remotePlayer}
-        style={styles.absoluteFill}
+        style={[styles.absoluteFill, { width: '100%', height: '100%' }]}
         contentFit="cover"
         nativeControls={false}
         playsInline={true}
-        surfaceType="textureView"
       />
 
       {/* Transparent overlay to capture taps for toggling controls */}
@@ -92,7 +98,6 @@ export default function CallRoomScreen() {
             contentFit="cover"
             nativeControls={false}
             playsInline={true}
-            surfaceType="textureView"
           />
         )}
       </View>

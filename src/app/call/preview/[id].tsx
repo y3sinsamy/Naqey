@@ -21,8 +21,15 @@ export default function CallPreviewScreen() {
   const previewPlayer = useVideoPlayer(require('@/assets/videos/patient.mp4'), player => {
     player.loop = true;
     player.muted = true; // required for web autoplay
-    player.play();
   });
+
+  // Call play() after mount so the web DOM has rendered the VideoView
+  // We depend on isVideoOff so that when the camera is re-enabled and the VideoView remounts, we trigger play again.
+  React.useEffect(() => {
+    if (!isVideoOff) {
+      previewPlayer.play();
+    }
+  }, [previewPlayer, isVideoOff]);
 
   return (
     <SafeAreaView style={styles.container}>
